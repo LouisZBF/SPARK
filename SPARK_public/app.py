@@ -51,9 +51,9 @@ SEX_OPTIONS = ("Female", "Male", "Unknown/unspecified")
 SEX_VALUE = {"Female": "F", "Male": "M", "Unknown/unspecified": "U"}
 
 
-@st.cache_data
+@st.cache_resource
 def cached_parameters():
-    return load_parameters(PARAMETER_PATH)
+    return load_parameters()
 
 
 def yes_no_to_int(value: str) -> int:
