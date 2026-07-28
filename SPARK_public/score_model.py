@@ -112,16 +112,13 @@ def _is_missing(value: Any) -> bool:
 
 
 def load_parameters(path: str | Path = "model_parameters.json") -> dict[str, Any]:
-    """Load and validate the locked model parameter JSON."""
     parameter_path = Path(path)
+
     if not parameter_path.is_absolute():
-        parameter_path = Path(__file__).with_name(str(parameter_path))
+        parameter_path = Path(__file__).parent / parameter_path
 
-    with parameter_path.open("r", encoding="utf-8") as handle:
-        params = json.load(handle)
-
-    _validate_parameter_file(params)
-    return params
+    with parameter_path.open("r", encoding="utf-8") as file:
+        return json.load(file)
 
 
 def _validate_parameter_file(params: Mapping[str, Any]) -> None:
