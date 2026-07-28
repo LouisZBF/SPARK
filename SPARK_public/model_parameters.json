@@ -1,0 +1,185 @@
+{
+  "model_name": "model3_summary_medication_primary",
+  "model_display_name": "Primary_model_locked",
+  "model_version": "2y_lookback_3y_binary_monitored_persistentprimary_v4_sourcebackfill_rxrisk_ridge_providerfree_v1",
+  "split_label": "primary_2015_2016_to_2017_2020q1",
+  "model_type": "ridge_logistic_regression",
+  "selected_C": 0.1,
+  "penalty": "l2",
+  "solver": "lbfgs",
+  "max_iter": 5000,
+  "class_weight": null,
+  "prediction_formula": {
+    "linear_predictor": "intercept + sum(coefficient_j * processed_feature_j)",
+    "predicted_risk": "1 / (1 + exp(-linear_predictor))",
+    "numeric_processing": "processed_value = (raw_or_imputed_value - scaling_mean) / scaling_sd"
+  },
+  "intercept": -4.6657803487719836,
+  "feature_order": [
+    "age_at_index",
+    "index_egfr",
+    "baseline_egfr_mean_preindex_2y",
+    "n_egfr_preindex_2y",
+    "egfr_relative_change_mean_to_index_2y",
+    "egfr_slope_2y",
+    "gender_at_index_M",
+    "gender_at_index_U",
+    "acei_arb_1y",
+    "diuretic_1y",
+    "polypharmacy_5plus_1y"
+  ],
+  "coefficients": {
+    "age_at_index": 0.02720993503223123,
+    "index_egfr": -0.4664573449260834,
+    "baseline_egfr_mean_preindex_2y": -0.0532227791165306,
+    "n_egfr_preindex_2y": 0.02910917270672745,
+    "egfr_relative_change_mean_to_index_2y": -0.48465829073222877,
+    "egfr_slope_2y": 0.012626286581128148,
+    "gender_at_index_M": 0.15071379396639561,
+    "gender_at_index_U": 0.013714675772904236,
+    "acei_arb_1y": 0.3700993643475363,
+    "diuretic_1y": 0.5707616035218716,
+    "polypharmacy_5plus_1y": 0.29728863331980226
+  },
+  "numeric_predictors": {
+    "age_at_index": {
+      "imputation_median": 71.0,
+      "scaling_mean": 70.42355514276298,
+      "scaling_sd": 11.173276728898978
+    },
+    "index_egfr": {
+      "imputation_median": 73.0,
+      "scaling_mean": 70.13158372531983,
+      "scaling_sd": 16.509578729932457
+    },
+    "baseline_egfr_mean_preindex_2y": {
+      "imputation_median": 73.66666666666667,
+      "scaling_mean": 70.95285574357351,
+      "scaling_sd": 15.395813834642231
+    },
+    "n_egfr_preindex_2y": {
+      "imputation_median": 2.0,
+      "scaling_mean": 3.0244779339065824,
+      "scaling_sd": 2.070361047875982
+    },
+    "egfr_relative_change_mean_to_index_2y": {
+      "imputation_median": 0.0,
+      "scaling_mean": -0.009454488965708111,
+      "scaling_sd": 0.11718263019813469
+    },
+    "egfr_slope_2y": {
+      "imputation_median": -3.79964452013351e-14,
+      "scaling_mean": 1.0305129714853318,
+      "scaling_sd": 77.61385213884473
+    }
+  },
+  "categorical_predictors": {
+    "gender_at_index": {
+      "reference_category": "F",
+      "development_categories": [
+        "F",
+        "M",
+        "U"
+      ],
+      "missing_or_blank_fill_value_in_package_scorer": "Unknown",
+      "encoding_rules": {
+        "gender_at_index_M": {
+          "category": "M",
+          "value": "1 if gender_at_index == 'M', else 0"
+        },
+        "gender_at_index_U": {
+          "category": "U",
+          "value": "1 if gender_at_index == 'U', else 0"
+        }
+      },
+      "calculator_note": "Use explicit source value 'U' for unknown/unspecified sex. A blank missing value is filled as 'Unknown' by the package scorer and is not identical to 'U'."
+    }
+  },
+  "binary_predictors": {
+    "acei_arb_1y": {
+      "coding": "0/1 integer; 1 indicates exposure/presence",
+      "missing_handling": "missing_to_0",
+      "scaling": "none",
+      "definition": "Any ACE inhibitor or angiotensin receptor blocker exposure in the prior 365 days; ATC C09A, C09B, C09C, or C09D.",
+      "atc_prefixes": [
+        "C09A",
+        "C09B",
+        "C09C",
+        "C09D"
+      ]
+    },
+    "diuretic_1y": {
+      "coding": "0/1 integer; 1 indicates exposure/presence",
+      "missing_handling": "missing_to_0",
+      "scaling": "none",
+      "definition": "Any diuretic exposure in the prior 365 days; ATC C03.",
+      "atc_prefixes": [
+        "C03"
+      ]
+    },
+    "polypharmacy_5plus_1y": {
+      "coding": "0/1 integer; 1 indicates exposure/presence",
+      "missing_handling": "missing_to_0",
+      "scaling": "none",
+      "definition": "Five or more unique ATC components recorded in the prior 365 days.",
+      "atc_prefixes": []
+    }
+  },
+  "risk_bands": [
+    {
+      "label": "<2.5%",
+      "lower_bound_inclusive": 0.0,
+      "upper_bound_exclusive": 0.025
+    },
+    {
+      "label": "2.5% to <5%",
+      "lower_bound_inclusive": 0.025,
+      "upper_bound_exclusive": 0.05
+    },
+    {
+      "label": "5% to <7.5%",
+      "lower_bound_inclusive": 0.05,
+      "upper_bound_exclusive": 0.075
+    },
+    {
+      "label": "7.5% to <10%",
+      "lower_bound_inclusive": 0.075,
+      "upper_bound_exclusive": 0.1
+    },
+    {
+      "label": ">=10%",
+      "lower_bound_inclusive": 0.1,
+      "upper_bound_exclusive": null
+    }
+  ],
+  "monitoring_thresholds": [
+    0.025,
+    0.05,
+    0.075,
+    0.1,
+    0.15
+  ],
+  "monitoring_priority_threshold_5_percent": 0.05,
+  "s22_publication_exactness": {
+    "complete_in_parameter_scope": true,
+    "exact_enough_by_itself": false,
+    "reason": "S.22 rounds the intercept, coefficients, scaling parameters, and some imputation values; egfr_slope_2y imputation is shown as approx 0."
+  },
+  "locked_model_verification": {
+    "corresponds_to_locked_primary_model": true,
+    "n_validation": 14812,
+    "events_validation": 375,
+    "auroc": 0.7577090346563229,
+    "brier": 0.023605147968543003,
+    "mean_predicted_risk": 0.025898925382261958,
+    "threshold_5_flagged_n": 1770,
+    "threshold_5_captured_events": 164,
+    "threshold_5_ppv": 0.09265536723163842,
+    "top_decile_flagged_n": 1482,
+    "top_decile_captured_events": 146,
+    "max_abs_prediction_difference_vs_locked": 4.787836793695988e-16,
+    "mean_abs_prediction_difference_vs_locked": 3.8450900292216845e-17,
+    "n_prediction_differences_gt_1e_minus_8": 0
+  },
+  "intended_use_statement": "Research-use reconstruction of the locked Primary model predicted risk from already derived predictor values. Not a deployment-ready clinical decision system."
+}
