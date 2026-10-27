@@ -64,7 +64,7 @@ LATEST_DATE = datetime.date(2100, 12, 31)
 
 STYLE = """
 <style>
-.block-container {max-width: 46rem; padding-top: 2.5rem; padding-bottom: 3rem;}
+.block-container {max-width: 46rem; padding-top: 4.75rem; padding-bottom: 3rem;}
 h1 {font-size: 2.3rem !important; margin-bottom: 0 !important; padding-bottom: 0 !important; letter-spacing: 0.03em;}
 div[data-testid="stMarkdownContainer"] p.priore-subtitle {font-size: 1.15rem; font-weight: 600; color: #3d4a57;
   margin: 0.1rem 0 0.5rem 0;}
