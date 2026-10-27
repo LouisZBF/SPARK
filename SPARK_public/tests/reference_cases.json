@@ -1,0 +1,2388 @@
+{
+ "description": "PRIORE reference cases. Expected values from the frozen production pipeline (SPARK8_pipeline.joblib); derived values from the development code (FINAL_03 functions extracted verbatim; same-day aggregation from the cleaning script).",
+ "authoritative_parameters_sha256": "c7b5340f8a58febf270b62a9fb0ca417334416c75013ed4635a09cb63e8b764c",
+ "production_pipeline_sha256": "5338013f82eb15168cc43e6076dc02a0f8dd28bd77951df6e92ea1e66cd0d2d1",
+ "rules": {
+  "lookback_days": 730,
+  "history_valid_range_inclusive": [
+   30,
+   120
+  ],
+  "min_history_days": 2,
+  "current_egfr_range_inclusive": [
+   30,
+   120
+  ],
+  "age_range_inclusive": [
+   18,
+   100
+  ],
+  "plausible_raw_egfr": "(0, 200]",
+  "same_day_results": "averaged before the 30-120 range and window are applied",
+  "threshold": 0.05,
+  "threshold_rule": "higher priority if unrounded probability >= 0.05"
+ },
+ "cases": [
+  {
+   "id": "R01",
+   "scenario": "low risk; younger female; no medicines",
+   "age": 45,
+   "sex": "F",
+   "index_date": "2026-06-15",
+   "index_egfr": 105,
+   "previous": [
+    {
+     "date": "2025-11-20",
+     "egfr": 101
+    },
+    {
+     "date": "2024-12-03",
+     "egfr": 98
+    }
+   ],
+   "acei_arb": 0,
+   "diuretic": 0,
+   "polypharmacy": 0,
+   "expected": {
+    "calculable": true,
+    "reasons": [],
+    "previous_days_used": [
+     {
+      "date": "2024-12-03",
+      "daily_egfr": 98.0
+     },
+     {
+      "date": "2025-11-20",
+      "daily_egfr": 101.0
+     }
+    ],
+    "n_previous_days_used": 2,
+    "previous_2y_mean_egfr": 99.5,
+    "relative_change": 0.05527638190954774,
+    "standardised": {
+     "age": -2.2753893740952957,
+     "current_egfr": 2.112011266009016,
+     "previous_2y_mean_egfr": 1.8542146951785268,
+     "relative_change": 0.5523930531838006,
+     "sex_male": 0.0,
+     "sex_unknown": 0.0,
+     "acei_arb": 0.0,
+     "diuretic": 0.0,
+     "polypharmacy": 0.0
+    },
+    "linear_predictor": -6.096025258760427,
+    "probability": 0.0022467410666907766,
+    "priority": "routine"
+   }
+  },
+  {
+   "id": "R02",
+   "scenario": "low risk; male; stable",
+   "age": 52,
+   "sex": "M",
+   "index_date": "2026-06-15",
+   "index_egfr": 96,
+   "previous": [
+    {
+     "date": "2025-09-01",
+     "egfr": 94
+    },
+    {
+     "date": "2025-01-15",
+     "egfr": 97
+    },
+    {
+     "date": "2024-08-20",
+     "egfr": 99
+    }
+   ],
+   "acei_arb": 0,
+   "diuretic": 0,
+   "polypharmacy": 0,
+   "expected": {
+    "calculable": true,
+    "reasons": [],
+    "previous_days_used": [
+     {
+      "date": "2024-08-20",
+      "daily_egfr": 99.0
+     },
+     {
+      "date": "2025-01-15",
+      "daily_egfr": 97.0
+     },
+     {
+      "date": "2025-09-01",
+      "daily_egfr": 94.0
+     }
+    ],
+    "n_previous_days_used": 3,
+    "previous_2y_mean_egfr": 96.66666666666667,
+    "relative_change": -0.0068965517241379795,
+    "standardised": {
+     "age": -1.648894553476118,
+     "current_egfr": 1.5668731890644676,
+     "previous_2y_mean_egfr": 1.670181985783326,
+     "relative_change": 0.021828638231153552,
+     "sex_male": 1.0,
+     "sex_unknown": 0.0,
+     "acei_arb": 0.0,
+     "diuretic": 0.0,
+     "polypharmacy": 0.0
+    },
+    "linear_predictor": -5.403337438387431,
+    "probability": 0.004481359274657503,
+    "priority": "routine"
+   }
+  },
+  {
+   "id": "R03",
+   "scenario": "results reported as >90 entered as 90",
+   "age": 60,
+   "sex": "F",
+   "index_date": "2026-06-15",
+   "index_egfr": 90,
+   "previous": [
+    {
+     "date": "2026-01-12",
+     "egfr": 90
+    },
+    {
+     "date": "2025-02-03",
+     "egfr": 90
+    }
+   ],
+   "acei_arb": 0,
+   "diuretic": 0,
+   "polypharmacy": 0,
+   "expected": {
+    "calculable": true,
+    "reasons": [],
+    "previous_days_used": [
+     {
+      "date": "2025-02-03",
+      "daily_egfr": 90.0
+     },
+     {
+      "date": "2026-01-12",
+      "daily_egfr": 90.0
+     }
+    ],
+    "n_previous_days_used": 2,
+    "previous_2y_mean_egfr": 90.0,
+    "relative_change": 0.0,
+    "standardised": {
+     "age": -0.932900472768486,
+     "current_egfr": 1.2034478044347687,
+     "previous_2y_mean_egfr": 1.2371638460299108,
+     "relative_change": 0.08068165861887787,
+     "sex_male": 0.0,
+     "sex_unknown": 0.0,
+     "acei_arb": 0.0,
+     "diuretic": 0.0,
+     "polypharmacy": 0.0
+    },
+    "linear_predictor": -5.366656829237712,
+    "probability": 0.0046480120039127885,
+    "priority": "routine"
+   }
+  },
+  {
+   "id": "R04",
+   "scenario": "just below 5% (closest below on a realistic integer grid)",
+   "age": 86,
+   "sex": "M",
+   "index_date": "2026-06-15",
+   "index_egfr": 60,
+   "previous": [
+    {
+     "date": "2026-01-20",
+     "egfr": 58
+    },
+    {
+     "date": "2025-07-15",
+     "egfr": 62
+    }
+   ],
+   "acei_arb": 1,
+   "diuretic": 1,
+   "polypharmacy": 1,
+   "expected": {
+    "calculable": true,
+    "reasons": [],
+    "previous_days_used": [
+     {
+      "date": "2025-07-15",
+      "daily_egfr": 62.0
+     },
+     {
+      "date": "2026-01-20",
+      "daily_egfr": 58.0
+     }
+    ],
+    "n_previous_days_used": 2,
+    "previous_2y_mean_egfr": 60.0,
+    "relative_change": 0.0,
+    "standardised": {
+     "age": 1.3940802895313176,
+     "current_egfr": -0.6136791187137262,
+     "previous_2y_mean_egfr": -0.7114177828604558,
+     "relative_change": 0.08068165861887787,
+     "sex_male": 1.0,
+     "sex_unknown": 0.0,
+     "acei_arb": 1.0,
+     "diuretic": 1.0,
+     "polypharmacy": 1.0
+    },
+    "linear_predictor": -2.9444440973068025,
+    "probability": 0.04999975688889272,
+    "priority": "routine"
+   }
+  },
+  {
+   "id": "R05",
+   "scenario": "just above 5% (closest at/above on a realistic integer grid)",
+   "age": 64,
+   "sex": "M",
+   "index_date": "2026-06-15",
+   "index_egfr": 71,
+   "previous": [
+    {
+     "date": "2026-01-20",
+     "egfr": 77
+    },
+    {
+     "date": "2025-07-15",
+     "egfr": 82
+    }
+   ],
+   "acei_arb": 1,
+   "diuretic": 1,
+   "polypharmacy": 1,
+   "expected": {
+    "calculable": true,
+    "reasons": [],
+    "previous_days_used": [
+     {
+      "date": "2025-07-15",
+      "daily_egfr": 82.0
+     },
+     {
+      "date": "2026-01-20",
+      "daily_egfr": 77.0
+     }
+    ],
+    "n_previous_days_used": 2,
+    "previous_2y_mean_egfr": 79.5,
+    "relative_change": -0.1069182389937107,
+    "standardised": {
+     "age": -0.57490343241467,
+     "current_egfr": 0.052600753107388626,
+     "previous_2y_mean_egfr": 0.5551602759182825,
+     "relative_change": -0.831725229781999,
+     "sex_male": 1.0,
+     "sex_unknown": 0.0,
+     "acei_arb": 1.0,
+     "diuretic": 1.0,
+     "polypharmacy": 1.0
+    },
+    "linear_predictor": -2.9444267125794408,
+    "probability": 0.05000058266609877,
+    "priority": "higher"
+   }
+  },
+  {
+   "id": "R06",
+   "scenario": "above 5%; female; all three medicine questions yes",
+   "age": 74,
+   "sex": "F",
+   "index_date": "2026-06-15",
+   "index_egfr": 52,
+   "previous": [
+    {
+     "date": "2025-12-01",
+     "egfr": 58
+    },
+    {
+     "date": "2025-03-10",
+     "egfr": 61
+    }
+   ],
+   "acei_arb": 1,
+   "diuretic": 1,
+   "polypharmacy": 1,
+   "expected": {
+    "calculable": true,
+    "reasons": [],
+    "previous_days_used": [
+     {
+      "date": "2025-03-10",
+      "daily_egfr": 61.0
+     },
+     {
+      "date": "2025-12-01",
+      "daily_egfr": 58.0
+     }
+    ],
+    "n_previous_days_used": 2,
+    "previous_2y_mean_egfr": 59.5,
+    "relative_change": -0.12605042016806722,
+    "standardised": {
+     "age": 0.32008916846986984,
+     "current_egfr": -1.0982462982199914,
+     "previous_2y_mean_egfr": -0.7438941433419619,
+     "relative_change": -0.9949932938458237,
+     "sex_male": 0.0,
+     "sex_unknown": 0.0,
+     "acei_arb": 1.0,
+     "diuretic": 1.0,
+     "polypharmacy": 1.0
+    },
+    "linear_predictor": -2.3770299124149052,
+    "probability": 0.08494113476335187,
+    "priority": "higher"
+   }
+  },
+  {
+   "id": "R07",
+   "scenario": "clearly above 5%; older male; declining",
+   "age": 82,
+   "sex": "M",
+   "index_date": "2026-06-15",
+   "index_egfr": 38,
+   "previous": [
+    {
+     "date": "2026-02-01",
+     "egfr": 47
+    },
+    {
+     "date": "2025-08-12",
+     "egfr": 51
+    },
+    {
+     "date": "2024-10-30",
+     "egfr": 53
+    }
+   ],
+   "acei_arb": 1,
+   "diuretic": 1,
+   "polypharmacy": 1,
+   "expected": {
+    "calculable": true,
+    "reasons": [],
+    "previous_days_used": [
+     {
+      "date": "2024-10-30",
+      "daily_egfr": 53.0
+     },
+     {
+      "date": "2025-08-12",
+      "daily_egfr": 51.0
+     },
+     {
+      "date": "2026-02-01",
+      "daily_egfr": 47.0
+     }
+    ],
+    "n_previous_days_used": 3,
+    "previous_2y_mean_egfr": 50.333333333333336,
+    "relative_change": -0.2450331125827815,
+    "standardised": {
+     "age": 1.0360832491775018,
+     "current_egfr": -1.9462388623559557,
+     "previous_2y_mean_egfr": -1.3392940855029072,
+     "relative_change": -2.0103544631038957,
+     "sex_male": 1.0,
+     "sex_unknown": 0.0,
+     "acei_arb": 1.0,
+     "diuretic": 1.0,
+     "polypharmacy": 1.0
+    },
+    "linear_predictor": -1.2803838398673246,
+    "probability": 0.2174848926231621,
+    "priority": "higher"
+   }
+  },
+  {
+   "id": "R08",
+   "scenario": "high; steep decline to eGFR 31",
+   "age": 88,
+   "sex": "M",
+   "index_date": "2026-06-15",
+   "index_egfr": 31,
+   "previous": [
+    {
+     "date": "2026-03-01",
+     "egfr": 45
+    },
+    {
+     "date": "2025-07-01",
+     "egfr": 52
+    }
+   ],
+   "acei_arb": 1,
+   "diuretic": 1,
+   "polypharmacy": 1,
+   "expected": {
+    "calculable": true,
+    "reasons": [],
+    "previous_days_used": [
+     {
+      "date": "2025-07-01",
+      "daily_egfr": 52.0
+     },
+     {
+      "date": "2026-03-01",
+      "daily_egfr": 45.0
+     }
+    ],
+    "n_previous_days_used": 2,
+    "previous_2y_mean_egfr": 48.5,
+    "relative_change": -0.36082474226804123,
+    "standardised": {
+     "age": 1.5730788097082256,
+     "current_egfr": -2.370235144423938,
+     "previous_2y_mean_egfr": -1.4583740739350963,
+     "relative_change": -2.9984840987800787,
+     "sex_male": 1.0,
+     "sex_unknown": 0.0,
+     "acei_arb": 1.0,
+     "diuretic": 1.0,
+     "polypharmacy": 1.0
+    },
+    "linear_predictor": -0.5785521019127629,
+    "probability": 0.35926582300033066,
+    "priority": "higher"
+   }
+  },
+  {
+   "id": "R09",
+   "scenario": "young adult",
+   "age": 25,
+   "sex": "F",
+   "index_date": "2026-06-15",
+   "index_egfr": 98,
+   "previous": [
+    {
+     "date": "2025-10-10",
+     "egfr": 101
+    },
+    {
+     "date": "2025-03-03",
+     "egfr": 99
+    }
+   ],
+   "acei_arb": 0,
+   "diuretic": 0,
+   "polypharmacy": 0,
+   "expected": {
+    "calculable": true,
+    "reasons": [],
+    "previous_days_used": [
+     {
+      "date": "2025-03-03",
+      "daily_egfr": 99.0
+     },
+     {
+      "date": "2025-10-10",
+      "daily_egfr": 101.0
+     }
+    ],
+    "n_previous_days_used": 2,
+    "previous_2y_mean_egfr": 100.0,
+    "relative_change": -0.02,
+    "standardised": {
+     "age": -4.065374575864375,
+     "current_egfr": 1.6880149839410339,
+     "previous_2y_mean_egfr": 1.886691055660033,
+     "relative_change": -0.08999210050552145,
+     "sex_male": 0.0,
+     "sex_unknown": 0.0,
+     "acei_arb": 0.0,
+     "diuretic": 0.0,
+     "polypharmacy": 0.0
+    },
+    "linear_predictor": -5.642603986722652,
+    "probability": 0.0035311158552576724,
+    "priority": "routine"
+   }
+  },
+  {
+   "id": "R10",
+   "scenario": "very old",
+   "age": 99,
+   "sex": "M",
+   "index_date": "2026-06-15",
+   "index_egfr": 44,
+   "previous": [
+    {
+     "date": "2026-01-05",
+     "egfr": 46
+    },
+    {
+     "date": "2025-06-20",
+     "egfr": 47
+    }
+   ],
+   "acei_arb": 1,
+   "diuretic": 0,
+   "polypharmacy": 1,
+   "expected": {
+    "calculable": true,
+    "reasons": [],
+    "previous_days_used": [
+     {
+      "date": "2025-06-20",
+      "daily_egfr": 47.0
+     },
+     {
+      "date": "2026-01-05",
+      "daily_egfr": 46.0
+     }
+    ],
+    "n_previous_days_used": 2,
+    "previous_2y_mean_egfr": 46.5,
+    "relative_change": -0.053763440860215055,
+    "standardised": {
+     "age": 2.5575706706812196,
+     "current_egfr": -1.5828134777262566,
+     "previous_2y_mean_egfr": -1.5882795158611207,
+     "relative_change": -0.3781187691348837,
+     "sex_male": 1.0,
+     "sex_unknown": 0.0,
+     "acei_arb": 1.0,
+     "diuretic": 0.0,
+     "polypharmacy": 1.0
+    },
+    "linear_predictor": -2.7564585469670413,
+    "probability": 0.05972293036086909,
+    "priority": "higher"
+   }
+  },
+  {
+   "id": "R11",
+   "scenario": "sex comparison: F",
+   "age": 70,
+   "sex": "F",
+   "index_date": "2026-06-15",
+   "index_egfr": 60,
+   "previous": [
+    {
+     "date": "2025-12-15",
+     "egfr": 64
+    },
+    {
+     "date": "2025-05-20",
+     "egfr": 66
+    }
+   ],
+   "acei_arb": 1,
+   "diuretic": 0,
+   "polypharmacy": 1,
+   "expected": {
+    "calculable": true,
+    "reasons": [],
+    "previous_days_used": [
+     {
+      "date": "2025-05-20",
+      "daily_egfr": 66.0
+     },
+     {
+      "date": "2025-12-15",
+      "daily_egfr": 64.0
+     }
+    ],
+    "n_previous_days_used": 2,
+    "previous_2y_mean_egfr": 65.0,
+    "relative_change": -0.07692307692307693,
+    "standardised": {
+     "age": -0.037907871883946086,
+     "current_egfr": -0.6136791187137262,
+     "previous_2y_mean_egfr": -0.3866541780453947,
+     "relative_change": -0.5757558764749657,
+     "sex_male": 0.0,
+     "sex_unknown": 0.0,
+     "acei_arb": 1.0,
+     "diuretic": 0.0,
+     "polypharmacy": 1.0
+    },
+    "linear_predictor": -3.4115924664505615,
+    "probability": 0.031935129235447904,
+    "priority": "routine"
+   }
+  },
+  {
+   "id": "R12",
+   "scenario": "sex comparison: M",
+   "age": 70,
+   "sex": "M",
+   "index_date": "2026-06-15",
+   "index_egfr": 60,
+   "previous": [
+    {
+     "date": "2025-12-15",
+     "egfr": 64
+    },
+    {
+     "date": "2025-05-20",
+     "egfr": 66
+    }
+   ],
+   "acei_arb": 1,
+   "diuretic": 0,
+   "polypharmacy": 1,
+   "expected": {
+    "calculable": true,
+    "reasons": [],
+    "previous_days_used": [
+     {
+      "date": "2025-05-20",
+      "daily_egfr": 66.0
+     },
+     {
+      "date": "2025-12-15",
+      "daily_egfr": 64.0
+     }
+    ],
+    "n_previous_days_used": 2,
+    "previous_2y_mean_egfr": 65.0,
+    "relative_change": -0.07692307692307693,
+    "standardised": {
+     "age": -0.037907871883946086,
+     "current_egfr": -0.6136791187137262,
+     "previous_2y_mean_egfr": -0.3866541780453947,
+     "relative_change": -0.5757558764749657,
+     "sex_male": 1.0,
+     "sex_unknown": 0.0,
+     "acei_arb": 1.0,
+     "diuretic": 0.0,
+     "polypharmacy": 1.0
+    },
+    "linear_predictor": -3.2606549595369456,
+    "probability": 0.03694589817868158,
+    "priority": "routine"
+   }
+  },
+  {
+   "id": "R13",
+   "scenario": "sex comparison: U",
+   "age": 70,
+   "sex": "U",
+   "index_date": "2026-06-15",
+   "index_egfr": 60,
+   "previous": [
+    {
+     "date": "2025-12-15",
+     "egfr": 64
+    },
+    {
+     "date": "2025-05-20",
+     "egfr": 66
+    }
+   ],
+   "acei_arb": 1,
+   "diuretic": 0,
+   "polypharmacy": 1,
+   "expected": {
+    "calculable": true,
+    "reasons": [],
+    "previous_days_used": [
+     {
+      "date": "2025-05-20",
+      "daily_egfr": 66.0
+     },
+     {
+      "date": "2025-12-15",
+      "daily_egfr": 64.0
+     }
+    ],
+    "n_previous_days_used": 2,
+    "previous_2y_mean_egfr": 65.0,
+    "relative_change": -0.07692307692307693,
+    "standardised": {
+     "age": -0.037907871883946086,
+     "current_egfr": -0.6136791187137262,
+     "previous_2y_mean_egfr": -0.3866541780453947,
+     "relative_change": -0.5757558764749657,
+     "sex_male": 0.0,
+     "sex_unknown": 1.0,
+     "acei_arb": 1.0,
+     "diuretic": 0.0,
+     "polypharmacy": 1.0
+    },
+    "linear_predictor": -3.3987822127580976,
+    "probability": 0.03233354523946542,
+    "priority": "routine"
+   }
+  },
+  {
+   "id": "R14",
+   "scenario": "medicine combination ACEi/ARB=0 diuretic=0 5+ medicines=0",
+   "age": 68,
+   "sex": "F",
+   "index_date": "2026-06-15",
+   "index_egfr": 58,
+   "previous": [
+    {
+     "date": "2025-11-11",
+     "egfr": 60
+    },
+    {
+     "date": "2025-04-04",
+     "egfr": 61
+    }
+   ],
+   "acei_arb": 0,
+   "diuretic": 0,
+   "polypharmacy": 0,
+   "expected": {
+    "calculable": true,
+    "reasons": [],
+    "previous_days_used": [
+     {
+      "date": "2025-04-04",
+      "daily_egfr": 61.0
+     },
+     {
+      "date": "2025-11-11",
+      "daily_egfr": 60.0
+     }
+    ],
+    "n_previous_days_used": 2,
+    "previous_2y_mean_egfr": 60.5,
+    "relative_change": -0.04132231404958678,
+    "standardised": {
+     "age": -0.21690639206085405,
+     "current_egfr": -0.7348209135902924,
+     "previous_2y_mean_egfr": -0.6789414223789497,
+     "relative_change": -0.2719500751092199,
+     "sex_male": 0.0,
+     "sex_unknown": 0.0,
+     "acei_arb": 0.0,
+     "diuretic": 0.0,
+     "polypharmacy": 0.0
+    },
+    "linear_predictor": -4.159215692172612,
+    "probability": 0.015379577861965515,
+    "priority": "routine"
+   }
+  },
+  {
+   "id": "R15",
+   "scenario": "medicine combination ACEi/ARB=1 diuretic=0 5+ medicines=0",
+   "age": 68,
+   "sex": "F",
+   "index_date": "2026-06-15",
+   "index_egfr": 58,
+   "previous": [
+    {
+     "date": "2025-11-11",
+     "egfr": 60
+    },
+    {
+     "date": "2025-04-04",
+     "egfr": 61
+    }
+   ],
+   "acei_arb": 1,
+   "diuretic": 0,
+   "polypharmacy": 0,
+   "expected": {
+    "calculable": true,
+    "reasons": [],
+    "previous_days_used": [
+     {
+      "date": "2025-04-04",
+      "daily_egfr": 61.0
+     },
+     {
+      "date": "2025-11-11",
+      "daily_egfr": 60.0
+     }
+    ],
+    "n_previous_days_used": 2,
+    "previous_2y_mean_egfr": 60.5,
+    "relative_change": -0.04132231404958678,
+    "standardised": {
+     "age": -0.21690639206085405,
+     "current_egfr": -0.7348209135902924,
+     "previous_2y_mean_egfr": -0.6789414223789497,
+     "relative_change": -0.2719500751092199,
+     "sex_male": 0.0,
+     "sex_unknown": 0.0,
+     "acei_arb": 1.0,
+     "diuretic": 0.0,
+     "polypharmacy": 0.0
+    },
+    "linear_predictor": -3.790288475114477,
+    "probability": 0.022090089620828125,
+    "priority": "routine"
+   }
+  },
+  {
+   "id": "R16",
+   "scenario": "medicine combination ACEi/ARB=0 diuretic=1 5+ medicines=0",
+   "age": 68,
+   "sex": "F",
+   "index_date": "2026-06-15",
+   "index_egfr": 58,
+   "previous": [
+    {
+     "date": "2025-11-11",
+     "egfr": 60
+    },
+    {
+     "date": "2025-04-04",
+     "egfr": 61
+    }
+   ],
+   "acei_arb": 0,
+   "diuretic": 1,
+   "polypharmacy": 0,
+   "expected": {
+    "calculable": true,
+    "reasons": [],
+    "previous_days_used": [
+     {
+      "date": "2025-04-04",
+      "daily_egfr": 61.0
+     },
+     {
+      "date": "2025-11-11",
+      "daily_egfr": 60.0
+     }
+    ],
+    "n_previous_days_used": 2,
+    "previous_2y_mean_egfr": 60.5,
+    "relative_change": -0.04132231404958678,
+    "standardised": {
+     "age": -0.21690639206085405,
+     "current_egfr": -0.7348209135902924,
+     "previous_2y_mean_egfr": -0.6789414223789497,
+     "relative_change": -0.2719500751092199,
+     "sex_male": 0.0,
+     "sex_unknown": 0.0,
+     "acei_arb": 0.0,
+     "diuretic": 1.0,
+     "polypharmacy": 0.0
+    },
+    "linear_predictor": -3.5860775757598287,
+    "probability": 0.026959825012432905,
+    "priority": "routine"
+   }
+  },
+  {
+   "id": "R17",
+   "scenario": "medicine combination ACEi/ARB=0 diuretic=0 5+ medicines=1",
+   "age": 68,
+   "sex": "F",
+   "index_date": "2026-06-15",
+   "index_egfr": 58,
+   "previous": [
+    {
+     "date": "2025-11-11",
+     "egfr": 60
+    },
+    {
+     "date": "2025-04-04",
+     "egfr": 61
+    }
+   ],
+   "acei_arb": 0,
+   "diuretic": 0,
+   "polypharmacy": 1,
+   "expected": {
+    "calculable": true,
+    "reasons": [],
+    "previous_days_used": [
+     {
+      "date": "2025-04-04",
+      "daily_egfr": 61.0
+     },
+     {
+      "date": "2025-11-11",
+      "daily_egfr": 60.0
+     }
+    ],
+    "n_previous_days_used": 2,
+    "previous_2y_mean_egfr": 60.5,
+    "relative_change": -0.04132231404958678,
+    "standardised": {
+     "age": -0.21690639206085405,
+     "current_egfr": -0.7348209135902924,
+     "previous_2y_mean_egfr": -0.6789414223789497,
+     "relative_change": -0.2719500751092199,
+     "sex_male": 0.0,
+     "sex_unknown": 0.0,
+     "acei_arb": 0.0,
+     "diuretic": 0.0,
+     "polypharmacy": 1.0
+    },
+    "linear_predictor": -3.860432388088411,
+    "probability": 0.0206245615276249,
+    "priority": "routine"
+   }
+  },
+  {
+   "id": "R18",
+   "scenario": "medicine combination ACEi/ARB=1 diuretic=1 5+ medicines=0",
+   "age": 68,
+   "sex": "F",
+   "index_date": "2026-06-15",
+   "index_egfr": 58,
+   "previous": [
+    {
+     "date": "2025-11-11",
+     "egfr": 60
+    },
+    {
+     "date": "2025-04-04",
+     "egfr": 61
+    }
+   ],
+   "acei_arb": 1,
+   "diuretic": 1,
+   "polypharmacy": 0,
+   "expected": {
+    "calculable": true,
+    "reasons": [],
+    "previous_days_used": [
+     {
+      "date": "2025-04-04",
+      "daily_egfr": 61.0
+     },
+     {
+      "date": "2025-11-11",
+      "daily_egfr": 60.0
+     }
+    ],
+    "n_previous_days_used": 2,
+    "previous_2y_mean_egfr": 60.5,
+    "relative_change": -0.04132231404958678,
+    "standardised": {
+     "age": -0.21690639206085405,
+     "current_egfr": -0.7348209135902924,
+     "previous_2y_mean_egfr": -0.6789414223789497,
+     "relative_change": -0.2719500751092199,
+     "sex_male": 0.0,
+     "sex_unknown": 0.0,
+     "acei_arb": 1.0,
+     "diuretic": 1.0,
+     "polypharmacy": 0.0
+    },
+    "linear_predictor": -3.2171503587016934,
+    "probability": 0.03852540092236192,
+    "priority": "routine"
+   }
+  },
+  {
+   "id": "R19",
+   "scenario": "medicine combination ACEi/ARB=1 diuretic=0 5+ medicines=1",
+   "age": 68,
+   "sex": "F",
+   "index_date": "2026-06-15",
+   "index_egfr": 58,
+   "previous": [
+    {
+     "date": "2025-11-11",
+     "egfr": 60
+    },
+    {
+     "date": "2025-04-04",
+     "egfr": 61
+    }
+   ],
+   "acei_arb": 1,
+   "diuretic": 0,
+   "polypharmacy": 1,
+   "expected": {
+    "calculable": true,
+    "reasons": [],
+    "previous_days_used": [
+     {
+      "date": "2025-04-04",
+      "daily_egfr": 61.0
+     },
+     {
+      "date": "2025-11-11",
+      "daily_egfr": 60.0
+     }
+    ],
+    "n_previous_days_used": 2,
+    "previous_2y_mean_egfr": 60.5,
+    "relative_change": -0.04132231404958678,
+    "standardised": {
+     "age": -0.21690639206085405,
+     "current_egfr": -0.7348209135902924,
+     "previous_2y_mean_egfr": -0.6789414223789497,
+     "relative_change": -0.2719500751092199,
+     "sex_male": 0.0,
+     "sex_unknown": 0.0,
+     "acei_arb": 1.0,
+     "diuretic": 0.0,
+     "polypharmacy": 1.0
+    },
+    "linear_predictor": -3.491505171030276,
+    "probability": 0.029554903167901058,
+    "priority": "routine"
+   }
+  },
+  {
+   "id": "R20",
+   "scenario": "medicine combination ACEi/ARB=0 diuretic=1 5+ medicines=1",
+   "age": 68,
+   "sex": "F",
+   "index_date": "2026-06-15",
+   "index_egfr": 58,
+   "previous": [
+    {
+     "date": "2025-11-11",
+     "egfr": 60
+    },
+    {
+     "date": "2025-04-04",
+     "egfr": 61
+    }
+   ],
+   "acei_arb": 0,
+   "diuretic": 1,
+   "polypharmacy": 1,
+   "expected": {
+    "calculable": true,
+    "reasons": [],
+    "previous_days_used": [
+     {
+      "date": "2025-04-04",
+      "daily_egfr": 61.0
+     },
+     {
+      "date": "2025-11-11",
+      "daily_egfr": 60.0
+     }
+    ],
+    "n_previous_days_used": 2,
+    "previous_2y_mean_egfr": 60.5,
+    "relative_change": -0.04132231404958678,
+    "standardised": {
+     "age": -0.21690639206085405,
+     "current_egfr": -0.7348209135902924,
+     "previous_2y_mean_egfr": -0.6789414223789497,
+     "relative_change": -0.2719500751092199,
+     "sex_male": 0.0,
+     "sex_unknown": 0.0,
+     "acei_arb": 0.0,
+     "diuretic": 1.0,
+     "polypharmacy": 1.0
+    },
+    "linear_predictor": -3.287294271675628,
+    "probability": 0.036009651889085156,
+    "priority": "routine"
+   }
+  },
+  {
+   "id": "R21",
+   "scenario": "medicine combination ACEi/ARB=1 diuretic=1 5+ medicines=1",
+   "age": 68,
+   "sex": "F",
+   "index_date": "2026-06-15",
+   "index_egfr": 58,
+   "previous": [
+    {
+     "date": "2025-11-11",
+     "egfr": 60
+    },
+    {
+     "date": "2025-04-04",
+     "egfr": 61
+    }
+   ],
+   "acei_arb": 1,
+   "diuretic": 1,
+   "polypharmacy": 1,
+   "expected": {
+    "calculable": true,
+    "reasons": [],
+    "previous_days_used": [
+     {
+      "date": "2025-04-04",
+      "daily_egfr": 61.0
+     },
+     {
+      "date": "2025-11-11",
+      "daily_egfr": 60.0
+     }
+    ],
+    "n_previous_days_used": 2,
+    "previous_2y_mean_egfr": 60.5,
+    "relative_change": -0.04132231404958678,
+    "standardised": {
+     "age": -0.21690639206085405,
+     "current_egfr": -0.7348209135902924,
+     "previous_2y_mean_egfr": -0.6789414223789497,
+     "relative_change": -0.2719500751092199,
+     "sex_male": 0.0,
+     "sex_unknown": 0.0,
+     "acei_arb": 1.0,
+     "diuretic": 1.0,
+     "polypharmacy": 1.0
+    },
+    "linear_predictor": -2.9183670546174927,
+    "probability": 0.051253046639350944,
+    "priority": "higher"
+   }
+  },
+  {
+   "id": "R22",
+   "scenario": "improving eGFR (+20%)",
+   "age": 66,
+   "sex": "M",
+   "index_date": "2026-06-15",
+   "index_egfr": 72,
+   "previous": [
+    {
+     "date": "2026-02-20",
+     "egfr": 61
+    },
+    {
+     "date": "2025-07-07",
+     "egfr": 59
+    }
+   ],
+   "acei_arb": 1,
+   "diuretic": 0,
+   "polypharmacy": 0,
+   "expected": {
+    "calculable": true,
+    "reasons": [],
+    "previous_days_used": [
+     {
+      "date": "2025-07-07",
+      "daily_egfr": 59.0
+     },
+     {
+      "date": "2026-02-20",
+      "daily_egfr": 61.0
+     }
+    ],
+    "n_previous_days_used": 2,
+    "previous_2y_mean_egfr": 60.0,
+    "relative_change": 0.2,
+    "standardised": {
+     "age": -0.39590491223776203,
+     "current_egfr": 0.11317165054567178,
+     "previous_2y_mean_egfr": -0.7114177828604558,
+     "relative_change": 1.7874192498628712,
+     "sex_male": 1.0,
+     "sex_unknown": 0.0,
+     "acei_arb": 1.0,
+     "diuretic": 0.0,
+     "polypharmacy": 0.0
+    },
+    "linear_predictor": -5.040193379627871,
+    "probability": 0.006430872746630958,
+    "priority": "routine"
+   }
+  },
+  {
+   "id": "R23",
+   "scenario": "stable eGFR (0%)",
+   "age": 66,
+   "sex": "M",
+   "index_date": "2026-06-15",
+   "index_egfr": 62,
+   "previous": [
+    {
+     "date": "2026-02-20",
+     "egfr": 61
+    },
+    {
+     "date": "2025-07-07",
+     "egfr": 63
+    }
+   ],
+   "acei_arb": 1,
+   "diuretic": 0,
+   "polypharmacy": 0,
+   "expected": {
+    "calculable": true,
+    "reasons": [],
+    "previous_days_used": [
+     {
+      "date": "2025-07-07",
+      "daily_egfr": 63.0
+     },
+     {
+      "date": "2026-02-20",
+      "daily_egfr": 61.0
+     }
+    ],
+    "n_previous_days_used": 2,
+    "previous_2y_mean_egfr": 62.0,
+    "relative_change": 0.0,
+    "standardised": {
+     "age": -0.39590491223776203,
+     "current_egfr": -0.4925373238371598,
+     "previous_2y_mean_egfr": -0.5815123409344314,
+     "relative_change": 0.08068165861887787,
+     "sex_male": 1.0,
+     "sex_unknown": 0.0,
+     "acei_arb": 1.0,
+     "diuretic": 0.0,
+     "polypharmacy": 0.0
+    },
+    "linear_predictor": -3.934938781420559,
+    "probability": 0.019172140096932338,
+    "priority": "routine"
+   }
+  },
+  {
+   "id": "R24",
+   "scenario": "declining eGFR (-19%)",
+   "age": 66,
+   "sex": "M",
+   "index_date": "2026-06-15",
+   "index_egfr": 50,
+   "previous": [
+    {
+     "date": "2026-02-20",
+     "egfr": 61
+    },
+    {
+     "date": "2025-07-07",
+     "egfr": 63
+    }
+   ],
+   "acei_arb": 1,
+   "diuretic": 0,
+   "polypharmacy": 0,
+   "expected": {
+    "calculable": true,
+    "reasons": [],
+    "previous_days_used": [
+     {
+      "date": "2025-07-07",
+      "daily_egfr": 63.0
+     },
+     {
+      "date": "2026-02-20",
+      "daily_egfr": 61.0
+     }
+    ],
+    "n_previous_days_used": 2,
+    "previous_2y_mean_egfr": 62.0,
+    "relative_change": -0.1935483870967742,
+    "standardised": {
+     "age": -0.39590491223776203,
+     "current_egfr": -1.2193880930965577,
+     "previous_2y_mean_egfr": -0.5815123409344314,
+     "relative_change": -1.570999881294664,
+     "sex_male": 1.0,
+     "sex_unknown": 0.0,
+     "acei_arb": 1.0,
+     "diuretic": 0.0,
+     "polypharmacy": 0.0
+    },
+    "linear_predictor": -2.792546125857079,
+    "probability": 0.057728300804775756,
+    "priority": "higher"
+   }
+  },
+  {
+   "id": "R25",
+   "scenario": "two results on the same day are averaged first (50 and 60 -> 55)",
+   "age": 72,
+   "sex": "F",
+   "index_date": "2026-06-15",
+   "index_egfr": 55,
+   "previous": [
+    {
+     "date": "2026-01-10",
+     "egfr": 50
+    },
+    {
+     "date": "2026-01-10",
+     "egfr": 60
+    },
+    {
+     "date": "2025-06-01",
+     "egfr": 70
+    }
+   ],
+   "acei_arb": 1,
+   "diuretic": 1,
+   "polypharmacy": 0,
+   "expected": {
+    "calculable": true,
+    "reasons": [],
+    "previous_days_used": [
+     {
+      "date": "2025-06-01",
+      "daily_egfr": 70.0
+     },
+     {
+      "date": "2026-01-10",
+      "daily_egfr": 55.0
+     }
+    ],
+    "n_previous_days_used": 2,
+    "previous_2y_mean_egfr": 62.5,
+    "relative_change": -0.12,
+    "standardised": {
+     "age": 0.1410906482929619,
+     "current_egfr": -0.9165336059051419,
+     "previous_2y_mean_egfr": -0.5490359804529252,
+     "relative_change": -0.943360896127518,
+     "sex_male": 0.0,
+     "sex_unknown": 0.0,
+     "acei_arb": 1.0,
+     "diuretic": 1.0,
+     "polypharmacy": 0.0
+    },
+    "linear_predictor": -2.8023735738730773,
+    "probability": 0.05719604712963102,
+    "priority": "higher"
+   }
+  },
+  {
+   "id": "R26",
+   "scenario": "same-day average enters the 30-120 range (25 and 35 -> 30, used)",
+   "age": 77,
+   "sex": "M",
+   "index_date": "2026-06-15",
+   "index_egfr": 40,
+   "previous": [
+    {
+     "date": "2025-12-01",
+     "egfr": 25
+    },
+    {
+     "date": "2025-12-01",
+     "egfr": 35
+    },
+    {
+     "date": "2025-05-01",
+     "egfr": 60
+    }
+   ],
+   "acei_arb": 1,
+   "diuretic": 1,
+   "polypharmacy": 1,
+   "expected": {
+    "calculable": true,
+    "reasons": [],
+    "previous_days_used": [
+     {
+      "date": "2025-05-01",
+      "daily_egfr": 60.0
+     },
+     {
+      "date": "2025-12-01",
+      "daily_egfr": 30.0
+     }
+    ],
+    "n_previous_days_used": 2,
+    "previous_2y_mean_egfr": 45.0,
+    "relative_change": -0.1111111111111111,
+    "standardised": {
+     "age": 0.5885869487352318,
+     "current_egfr": -1.8250970674793894,
+     "previous_2y_mean_egfr": -1.6857085973056392,
+     "relative_change": -0.8675058920722294,
+     "sex_male": 1.0,
+     "sex_unknown": 0.0,
+     "acei_arb": 1.0,
+     "diuretic": 1.0,
+     "polypharmacy": 1.0
+    },
+    "linear_predictor": -1.8866368092120038,
+    "probability": 0.13162841409971598,
+    "priority": "higher"
+   }
+  },
+  {
+   "id": "R27",
+   "scenario": "window: 730 days before used; 731 days before, same day and after not used",
+   "age": 70,
+   "sex": "F",
+   "index_date": "2026-06-15",
+   "index_egfr": 65,
+   "previous": [
+    {
+     "date": "2024-06-15",
+     "egfr": 80
+    },
+    {
+     "date": "2024-06-14",
+     "egfr": 90
+    },
+    {
+     "date": "2026-06-15",
+     "egfr": 50
+    },
+    {
+     "date": "2026-07-01",
+     "egfr": 55
+    },
+    {
+     "date": "2025-06-15",
+     "egfr": 70
+    }
+   ],
+   "acei_arb": 0,
+   "diuretic": 1,
+   "polypharmacy": 1,
+   "expected": {
+    "calculable": true,
+    "reasons": [],
+    "previous_days_used": [
+     {
+      "date": "2024-06-15",
+      "daily_egfr": 80.0
+     },
+     {
+      "date": "2025-06-15",
+      "daily_egfr": 70.0
+     }
+    ],
+    "n_previous_days_used": 2,
+    "previous_2y_mean_egfr": 75.0,
+    "relative_change": -0.13333333333333333,
+    "standardised": {
+     "age": -0.037907871883946086,
+     "current_egfr": -0.3108246315223103,
+     "previous_2y_mean_egfr": 0.2628730315847275,
+     "relative_change": -1.0571434022104509,
+     "sex_male": 0.0,
+     "sex_unknown": 0.0,
+     "acei_arb": 0.0,
+     "diuretic": 1.0,
+     "polypharmacy": 1.0
+    },
+    "linear_predictor": -3.1519576035438823,
+    "probability": 0.04101421242632309,
+    "priority": "routine"
+   }
+  },
+  {
+   "id": "R28",
+   "scenario": "leap-year window: 2 calendar years = 731 days (not used); 730 days used",
+   "age": 63,
+   "sex": "M",
+   "index_date": "2025-01-10",
+   "index_egfr": 70,
+   "previous": [
+    {
+     "date": "2023-01-10",
+     "egfr": 95
+    },
+    {
+     "date": "2023-01-11",
+     "egfr": 85
+    },
+    {
+     "date": "2024-02-29",
+     "egfr": 80
+    }
+   ],
+   "acei_arb": 1,
+   "diuretic": 0,
+   "polypharmacy": 0,
+   "expected": {
+    "calculable": true,
+    "reasons": [],
+    "previous_days_used": [
+     {
+      "date": "2023-01-11",
+      "daily_egfr": 85.0
+     },
+     {
+      "date": "2024-02-29",
+      "daily_egfr": 80.0
+     }
+    ],
+    "n_previous_days_used": 2,
+    "previous_2y_mean_egfr": 82.5,
+    "relative_change": -0.15151515151515152,
+    "standardised": {
+     "age": -0.664402692503124,
+     "current_egfr": -0.007970144330894538,
+     "previous_2y_mean_egfr": 0.7500184388073191,
+     "relative_change": -1.2123013650508139,
+     "sex_male": 1.0,
+     "sex_unknown": 0.0,
+     "acei_arb": 1.0,
+     "diuretic": 0.0,
+     "polypharmacy": 0.0
+    },
+    "linear_predictor": -3.617043136298295,
+    "probability": 0.026159295765687395,
+    "priority": "routine"
+   }
+  },
+  {
+   "id": "R29",
+   "scenario": "previous results below 30 and above 120 not used",
+   "age": 75,
+   "sex": "M",
+   "index_date": "2026-06-15",
+   "index_egfr": 45,
+   "previous": [
+    {
+     "date": "2026-02-01",
+     "egfr": 28
+    },
+    {
+     "date": "2025-10-01",
+     "egfr": 125
+    },
+    {
+     "date": "2025-06-01",
+     "egfr": 50
+    },
+    {
+     "date": "2025-01-15",
+     "egfr": 52
+    }
+   ],
+   "acei_arb": 1,
+   "diuretic": 0,
+   "polypharmacy": 1,
+   "expected": {
+    "calculable": true,
+    "reasons": [],
+    "previous_days_used": [
+     {
+      "date": "2025-01-15",
+      "daily_egfr": 52.0
+     },
+     {
+      "date": "2025-06-01",
+      "daily_egfr": 50.0
+     }
+    ],
+    "n_previous_days_used": 2,
+    "previous_2y_mean_egfr": 51.0,
+    "relative_change": -0.11764705882352941,
+    "standardised": {
+     "age": 0.40958842855832384,
+     "current_egfr": -1.5222425802879735,
+     "previous_2y_mean_egfr": -1.2959922715275658,
+     "relative_change": -0.9232816303481769,
+     "sex_male": 1.0,
+     "sex_unknown": 0.0,
+     "acei_arb": 1.0,
+     "diuretic": 0.0,
+     "polypharmacy": 1.0
+    },
+    "linear_predictor": -2.6018085609544404,
+    "probability": 0.06902211509769844,
+    "priority": "higher"
+   }
+  },
+  {
+   "id": "R30",
+   "scenario": "12 previous results",
+   "age": 80,
+   "sex": "F",
+   "index_date": "2026-06-15",
+   "index_egfr": 47,
+   "previous": [
+    {
+     "date": "2026-04-16",
+     "egfr": 49
+    },
+    {
+     "date": "2026-02-15",
+     "egfr": 50
+    },
+    {
+     "date": "2025-12-17",
+     "egfr": 51
+    },
+    {
+     "date": "2025-10-18",
+     "egfr": 52
+    },
+    {
+     "date": "2025-08-19",
+     "egfr": 53
+    },
+    {
+     "date": "2025-06-20",
+     "egfr": 54
+    },
+    {
+     "date": "2025-04-21",
+     "egfr": 55
+    },
+    {
+     "date": "2025-02-20",
+     "egfr": 56
+    },
+    {
+     "date": "2024-12-22",
+     "egfr": 57
+    },
+    {
+     "date": "2024-10-23",
+     "egfr": 58
+    },
+    {
+     "date": "2024-08-24",
+     "egfr": 59
+    },
+    {
+     "date": "2024-06-25",
+     "egfr": 60
+    }
+   ],
+   "acei_arb": 1,
+   "diuretic": 1,
+   "polypharmacy": 1,
+   "expected": {
+    "calculable": true,
+    "reasons": [],
+    "previous_days_used": [
+     {
+      "date": "2024-06-25",
+      "daily_egfr": 60.0
+     },
+     {
+      "date": "2024-08-24",
+      "daily_egfr": 59.0
+     },
+     {
+      "date": "2024-10-23",
+      "daily_egfr": 58.0
+     },
+     {
+      "date": "2024-12-22",
+      "daily_egfr": 57.0
+     },
+     {
+      "date": "2025-02-20",
+      "daily_egfr": 56.0
+     },
+     {
+      "date": "2025-04-21",
+      "daily_egfr": 55.0
+     },
+     {
+      "date": "2025-06-20",
+      "daily_egfr": 54.0
+     },
+     {
+      "date": "2025-08-19",
+      "daily_egfr": 53.0
+     },
+     {
+      "date": "2025-10-18",
+      "daily_egfr": 52.0
+     },
+     {
+      "date": "2025-12-17",
+      "daily_egfr": 51.0
+     },
+     {
+      "date": "2026-02-15",
+      "daily_egfr": 50.0
+     },
+     {
+      "date": "2026-04-16",
+      "daily_egfr": 49.0
+     }
+    ],
+    "n_previous_days_used": 12,
+    "previous_2y_mean_egfr": 54.5,
+    "relative_change": -0.13761467889908258,
+    "standardised": {
+     "age": 0.8570847290005937,
+     "current_egfr": -1.4011007854114073,
+     "previous_2y_mean_egfr": -1.068657748157023,
+     "relative_change": -1.093679069301301,
+     "sex_male": 0.0,
+     "sex_unknown": 0.0,
+     "acei_arb": 1.0,
+     "diuretic": 1.0,
+     "polypharmacy": 1.0
+    },
+    "linear_predictor": -2.1526601195844655,
+    "probability": 0.10408290650792461,
+    "priority": "higher"
+   }
+  },
+  {
+   "id": "R31",
+   "scenario": "current eGFR at lower limit 30",
+   "age": 85,
+   "sex": "M",
+   "index_date": "2026-06-15",
+   "index_egfr": 30,
+   "previous": [
+    {
+     "date": "2026-01-20",
+     "egfr": 35
+    },
+    {
+     "date": "2025-09-09",
+     "egfr": 33
+    }
+   ],
+   "acei_arb": 1,
+   "diuretic": 1,
+   "polypharmacy": 1,
+   "expected": {
+    "calculable": true,
+    "reasons": [],
+    "previous_days_used": [
+     {
+      "date": "2025-09-09",
+      "daily_egfr": 33.0
+     },
+     {
+      "date": "2026-01-20",
+      "daily_egfr": 35.0
+     }
+    ],
+    "n_previous_days_used": 2,
+    "previous_2y_mean_egfr": 34.0,
+    "relative_change": -0.11764705882352941,
+    "standardised": {
+     "age": 1.3045810294428637,
+     "current_egfr": -2.430806041862221,
+     "previous_2y_mean_egfr": -2.4001885278987736,
+     "relative_change": -0.9232816303481769,
+     "sex_male": 1.0,
+     "sex_unknown": 0.0,
+     "acei_arb": 1.0,
+     "diuretic": 1.0,
+     "polypharmacy": 1.0
+    },
+    "linear_predictor": -1.513965030048305,
+    "probability": 0.18035191912770082,
+    "priority": "higher"
+   }
+  },
+  {
+   "id": "R32",
+   "scenario": "current eGFR at upper limit 120",
+   "age": 30,
+   "sex": "F",
+   "index_date": "2026-06-15",
+   "index_egfr": 120,
+   "previous": [
+    {
+     "date": "2026-01-20",
+     "egfr": 115
+    },
+    {
+     "date": "2025-09-09",
+     "egfr": 118
+    }
+   ],
+   "acei_arb": 0,
+   "diuretic": 0,
+   "polypharmacy": 0,
+   "expected": {
+    "calculable": true,
+    "reasons": [],
+    "previous_days_used": [
+     {
+      "date": "2025-09-09",
+      "daily_egfr": 118.0
+     },
+     {
+      "date": "2026-01-20",
+      "daily_egfr": 115.0
+     }
+    ],
+    "n_previous_days_used": 2,
+    "previous_2y_mean_egfr": 116.5,
+    "relative_change": 0.030042918454935622,
+    "standardised": {
+     "age": -3.6178782754221053,
+     "current_egfr": 3.0205747275832633,
+     "previous_2y_mean_egfr": 2.9584109515497348,
+     "relative_change": 0.33705855000746054,
+     "sex_male": 0.0,
+     "sex_unknown": 0.0,
+     "acei_arb": 0.0,
+     "diuretic": 0.0,
+     "polypharmacy": 0.0
+    },
+    "linear_predictor": -6.5194694471199,
+    "probability": 0.0014722803636825219,
+    "priority": "routine"
+   }
+  },
+  {
+   "id": "R33",
+   "scenario": "age at lower limit 18",
+   "age": 18,
+   "sex": "F",
+   "index_date": "2026-06-15",
+   "index_egfr": 110,
+   "previous": [
+    {
+     "date": "2026-01-20",
+     "egfr": 108
+    },
+    {
+     "date": "2025-09-09",
+     "egfr": 112
+    }
+   ],
+   "acei_arb": 0,
+   "diuretic": 0,
+   "polypharmacy": 0,
+   "expected": {
+    "calculable": true,
+    "reasons": [],
+    "previous_days_used": [
+     {
+      "date": "2025-09-09",
+      "daily_egfr": 112.0
+     },
+     {
+      "date": "2026-01-20",
+      "daily_egfr": 108.0
+     }
+    ],
+    "n_previous_days_used": 2,
+    "previous_2y_mean_egfr": 110.0,
+    "relative_change": 0.0,
+    "standardised": {
+     "age": -4.691869396483553,
+     "current_egfr": 2.414865753200432,
+     "previous_2y_mean_egfr": 2.536218265290155,
+     "relative_change": 0.08068165861887787,
+     "sex_male": 0.0,
+     "sex_unknown": 0.0,
+     "acei_arb": 0.0,
+     "diuretic": 0.0,
+     "polypharmacy": 0.0
+    },
+    "linear_predictor": -6.120961604264096,
+    "probability": 0.0021915295840078427,
+    "priority": "routine"
+   }
+  },
+  {
+   "id": "R34",
+   "scenario": "age at upper limit 100",
+   "age": 100,
+   "sex": "M",
+   "index_date": "2026-06-15",
+   "index_egfr": 40,
+   "previous": [
+    {
+     "date": "2026-01-20",
+     "egfr": 42
+    },
+    {
+     "date": "2025-09-09",
+     "egfr": 44
+    }
+   ],
+   "acei_arb": 1,
+   "diuretic": 1,
+   "polypharmacy": 1,
+   "expected": {
+    "calculable": true,
+    "reasons": [],
+    "previous_days_used": [
+     {
+      "date": "2025-09-09",
+      "daily_egfr": 44.0
+     },
+     {
+      "date": "2026-01-20",
+      "daily_egfr": 42.0
+     }
+    ],
+    "n_previous_days_used": 2,
+    "previous_2y_mean_egfr": 43.0,
+    "relative_change": -0.06976744186046512,
+    "standardised": {
+     "age": 2.6470699307696735,
+     "current_egfr": -1.8250970674793894,
+     "previous_2y_mean_egfr": -1.8156140392316635,
+     "relative_change": -0.51469191972205,
+     "sex_male": 1.0,
+     "sex_unknown": 0.0,
+     "acei_arb": 1.0,
+     "diuretic": 1.0,
+     "polypharmacy": 1.0
+    },
+    "linear_predictor": -1.9880461729252676,
+    "probability": 0.12046372130882627,
+    "priority": "higher"
+   }
+  },
+  {
+   "id": "R35",
+   "scenario": "large fall from previous average (-67%)",
+   "age": 79,
+   "sex": "F",
+   "index_date": "2026-06-15",
+   "index_egfr": 30,
+   "previous": [
+    {
+     "date": "2026-01-20",
+     "egfr": 90
+    },
+    {
+     "date": "2025-09-09",
+     "egfr": 90
+    }
+   ],
+   "acei_arb": 1,
+   "diuretic": 1,
+   "polypharmacy": 1,
+   "expected": {
+    "calculable": true,
+    "reasons": [],
+    "previous_days_used": [
+     {
+      "date": "2025-09-09",
+      "daily_egfr": 90.0
+     },
+     {
+      "date": "2026-01-20",
+      "daily_egfr": 90.0
+     }
+    ],
+    "n_previous_days_used": 2,
+    "previous_2y_mean_egfr": 90.0,
+    "relative_change": -0.6666666666666666,
+    "standardised": {
+     "age": 0.7675854689121397,
+     "current_egfr": -2.430806041862221,
+     "previous_2y_mean_egfr": 1.2371638460299108,
+     "relative_change": -5.608443645527766,
+     "sex_male": 0.0,
+     "sex_unknown": 0.0,
+     "acei_arb": 1.0,
+     "diuretic": 1.0,
+     "polypharmacy": 1.0
+    },
+    "linear_predictor": 0.3862450371817179,
+    "probability": 0.5953784425818679,
+    "priority": "higher"
+   }
+  },
+  {
+   "id": "R36",
+   "scenario": "large rise from previous average (+138%)",
+   "age": 40,
+   "sex": "M",
+   "index_date": "2026-06-15",
+   "index_egfr": 119,
+   "previous": [
+    {
+     "date": "2026-01-20",
+     "egfr": 50
+    },
+    {
+     "date": "2025-09-09",
+     "egfr": 50
+    }
+   ],
+   "acei_arb": 0,
+   "diuretic": 0,
+   "polypharmacy": 0,
+   "expected": {
+    "calculable": true,
+    "reasons": [],
+    "previous_days_used": [
+     {
+      "date": "2025-09-09",
+      "daily_egfr": 50.0
+     },
+     {
+      "date": "2026-01-20",
+      "daily_egfr": 50.0
+     }
+    ],
+    "n_previous_days_used": 2,
+    "previous_2y_mean_egfr": 50.0,
+    "relative_change": 1.38,
+    "standardised": {
+     "age": -2.7228856745375656,
+     "current_egfr": 2.9600038301449803,
+     "previous_2y_mean_egfr": -1.3609449924905779,
+     "relative_change": 11.85717103820243,
+     "sex_male": 1.0,
+     "sex_unknown": 0.0,
+     "acei_arb": 0.0,
+     "diuretic": 0.0,
+     "polypharmacy": 0.0
+    },
+    "linear_predictor": -11.670362476733086,
+    "probability": 8.543233259479079e-06,
+    "priority": "routine"
+   }
+  },
+  {
+   "id": "R37",
+   "scenario": "current eGFR not a whole number (average of two results on the current day)",
+   "age": 67,
+   "sex": "F",
+   "index_date": "2026-06-15",
+   "index_egfr": 57.5,
+   "previous": [
+    {
+     "date": "2026-02-02",
+     "egfr": 63
+    },
+    {
+     "date": "2025-08-18",
+     "egfr": 64
+    }
+   ],
+   "acei_arb": 1,
+   "diuretic": 0,
+   "polypharmacy": 1,
+   "expected": {
+    "calculable": true,
+    "reasons": [],
+    "previous_days_used": [
+     {
+      "date": "2025-08-18",
+      "daily_egfr": 64.0
+     },
+     {
+      "date": "2026-02-02",
+      "daily_egfr": 63.0
+     }
+    ],
+    "n_previous_days_used": 2,
+    "previous_2y_mean_egfr": 63.5,
+    "relative_change": -0.09448818897637795,
+    "standardised": {
+     "age": -0.30640565214930804,
+     "current_egfr": -0.7651063623094341,
+     "previous_2y_mean_egfr": -0.48408325948991304,
+     "relative_change": -0.7256510616538748,
+     "sex_male": 0.0,
+     "sex_unknown": 0.0,
+     "acei_arb": 1.0,
+     "diuretic": 0.0,
+     "polypharmacy": 1.0
+    },
+    "linear_predictor": -3.270642303754544,
+    "probability": 0.03659217827674037,
+    "priority": "routine"
+   }
+  },
+  {
+   "id": "R38",
+   "scenario": "previous results exactly 30 and 120 used; 29.5 and 120.5 not used",
+   "age": 58,
+   "sex": "M",
+   "index_date": "2026-06-15",
+   "index_egfr": 75,
+   "previous": [
+    {
+     "date": "2026-03-03",
+     "egfr": 30
+    },
+    {
+     "date": "2025-11-11",
+     "egfr": 120
+    },
+    {
+     "date": "2025-08-08",
+     "egfr": 29.5
+    },
+    {
+     "date": "2025-04-04",
+     "egfr": 120.5
+    }
+   ],
+   "acei_arb": 0,
+   "diuretic": 1,
+   "polypharmacy": 0,
+   "expected": {
+    "calculable": true,
+    "reasons": [],
+    "previous_days_used": [
+     {
+      "date": "2025-11-11",
+      "daily_egfr": 120.0
+     },
+     {
+      "date": "2026-03-03",
+      "daily_egfr": 30.0
+     }
+    ],
+    "n_previous_days_used": 2,
+    "previous_2y_mean_egfr": 75.0,
+    "relative_change": 0.0,
+    "standardised": {
+     "age": -1.111898992945394,
+     "current_egfr": 0.2948843428605213,
+     "previous_2y_mean_egfr": 0.2628730315847275,
+     "relative_change": 0.08068165861887787,
+     "sex_male": 1.0,
+     "sex_unknown": 0.0,
+     "acei_arb": 0.0,
+     "diuretic": 1.0,
+     "polypharmacy": 0.0
+    },
+    "linear_predictor": -4.168326253427821,
+    "probability": 0.015242223601373145,
+    "priority": "routine"
+   }
+  },
+  {
+   "id": "X01",
+   "scenario": "only one day of previous results (two same-day results count once)",
+   "age": 70,
+   "sex": "F",
+   "index_date": "2026-06-15",
+   "index_egfr": 60,
+   "previous": [
+    {
+     "date": "2025-12-01",
+     "egfr": 60
+    },
+    {
+     "date": "2025-12-01",
+     "egfr": 62
+    }
+   ],
+   "acei_arb": 0,
+   "diuretic": 0,
+   "polypharmacy": 0,
+   "expected": {
+    "calculable": false,
+    "reasons": [
+     "fewer than 2 days with a usable previous eGFR result"
+    ],
+    "previous_days_used": [
+     {
+      "date": "2025-12-01",
+      "daily_egfr": 61.0
+     }
+    ],
+    "n_previous_days_used": 1
+   }
+  },
+  {
+   "id": "X02",
+   "scenario": "one previous result inside the 2 years, one outside",
+   "age": 70,
+   "sex": "F",
+   "index_date": "2026-06-15",
+   "index_egfr": 60,
+   "previous": [
+    {
+     "date": "2025-12-01",
+     "egfr": 60
+    },
+    {
+     "date": "2024-01-01",
+     "egfr": 62
+    }
+   ],
+   "acei_arb": 0,
+   "diuretic": 0,
+   "polypharmacy": 0,
+   "expected": {
+    "calculable": false,
+    "reasons": [
+     "fewer than 2 days with a usable previous eGFR result"
+    ],
+    "previous_days_used": [
+     {
+      "date": "2025-12-01",
+      "daily_egfr": 60.0
+     }
+    ],
+    "n_previous_days_used": 1
+   }
+  },
+  {
+   "id": "X03",
+   "scenario": "current eGFR 29 (below 30)",
+   "age": 70,
+   "sex": "M",
+   "index_date": "2026-06-15",
+   "index_egfr": 29,
+   "previous": [
+    {
+     "date": "2025-12-01",
+     "egfr": 35
+    },
+    {
+     "date": "2025-06-01",
+     "egfr": 36
+    }
+   ],
+   "acei_arb": 1,
+   "diuretic": 1,
+   "polypharmacy": 1,
+   "expected": {
+    "calculable": false,
+    "reasons": [
+     "current eGFR outside 30-120"
+    ],
+    "previous_days_used": [
+     {
+      "date": "2025-06-01",
+      "daily_egfr": 36.0
+     },
+     {
+      "date": "2025-12-01",
+      "daily_egfr": 35.0
+     }
+    ],
+    "n_previous_days_used": 2
+   }
+  },
+  {
+   "id": "X04",
+   "scenario": "current eGFR 121 (above 120)",
+   "age": 40,
+   "sex": "F",
+   "index_date": "2026-06-15",
+   "index_egfr": 121,
+   "previous": [
+    {
+     "date": "2025-12-01",
+     "egfr": 115
+    },
+    {
+     "date": "2025-06-01",
+     "egfr": 116
+    }
+   ],
+   "acei_arb": 0,
+   "diuretic": 0,
+   "polypharmacy": 0,
+   "expected": {
+    "calculable": false,
+    "reasons": [
+     "current eGFR outside 30-120"
+    ],
+    "previous_days_used": [
+     {
+      "date": "2025-06-01",
+      "daily_egfr": 116.0
+     },
+     {
+      "date": "2025-12-01",
+      "daily_egfr": 115.0
+     }
+    ],
+    "n_previous_days_used": 2
+   }
+  },
+  {
+   "id": "X05",
+   "scenario": "age 17 (below 18)",
+   "age": 17,
+   "sex": "F",
+   "index_date": "2026-06-15",
+   "index_egfr": 100,
+   "previous": [
+    {
+     "date": "2025-12-01",
+     "egfr": 101
+    },
+    {
+     "date": "2025-06-01",
+     "egfr": 99
+    }
+   ],
+   "acei_arb": 0,
+   "diuretic": 0,
+   "polypharmacy": 0,
+   "expected": {
+    "calculable": false,
+    "reasons": [
+     "age outside 18-100"
+    ],
+    "previous_days_used": [
+     {
+      "date": "2025-06-01",
+      "daily_egfr": 99.0
+     },
+     {
+      "date": "2025-12-01",
+      "daily_egfr": 101.0
+     }
+    ],
+    "n_previous_days_used": 2
+   }
+  },
+  {
+   "id": "X06",
+   "scenario": "age 101 (above 100)",
+   "age": 101,
+   "sex": "M",
+   "index_date": "2026-06-15",
+   "index_egfr": 50,
+   "previous": [
+    {
+     "date": "2025-12-01",
+     "egfr": 52
+    },
+    {
+     "date": "2025-06-01",
+     "egfr": 51
+    }
+   ],
+   "acei_arb": 1,
+   "diuretic": 0,
+   "polypharmacy": 1,
+   "expected": {
+    "calculable": false,
+    "reasons": [
+     "age outside 18-100"
+    ],
+    "previous_days_used": [
+     {
+      "date": "2025-06-01",
+      "daily_egfr": 51.0
+     },
+     {
+      "date": "2025-12-01",
+      "daily_egfr": 52.0
+     }
+    ],
+    "n_previous_days_used": 2
+   }
+  },
+  {
+   "id": "X07",
+   "scenario": "all previous results outside 30-120",
+   "age": 70,
+   "sex": "M",
+   "index_date": "2026-06-15",
+   "index_egfr": 45,
+   "previous": [
+    {
+     "date": "2025-12-01",
+     "egfr": 25
+    },
+    {
+     "date": "2025-06-01",
+     "egfr": 130
+    }
+   ],
+   "acei_arb": 1,
+   "diuretic": 0,
+   "polypharmacy": 1,
+   "expected": {
+    "calculable": false,
+    "reasons": [
+     "fewer than 2 days with a usable previous eGFR result"
+    ],
+    "previous_days_used": [],
+    "n_previous_days_used": 0
+   }
+  }
+ ]
+}

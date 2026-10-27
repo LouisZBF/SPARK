@@ -1,185 +1,289 @@
 {
-  "model_name": "model3_summary_medication_primary",
-  "model_display_name": "Primary_model_locked",
-  "model_version": "2y_lookback_3y_binary_monitored_persistentprimary_v4_sourcebackfill_rxrisk_ridge_providerfree_v1",
-  "split_label": "primary_2015_2016_to_2017_2020q1",
-  "model_type": "ridge_logistic_regression",
-  "selected_C": 0.1,
-  "penalty": "l2",
-  "solver": "lbfgs",
-  "max_iter": 5000,
-  "class_weight": null,
-  "prediction_formula": {
-    "linear_predictor": "intercept + sum(coefficient_j * processed_feature_j)",
-    "predicted_risk": "1 / (1 + exp(-linear_predictor))",
-    "numeric_processing": "processed_value = (raw_or_imputed_value - scaling_mean) / scaling_sd"
+  "name": "PRIORE",
+  "purpose": "Estimated 3-year risk of sustained kidney function decline, used to prioritise kidney reassessment in primary care.",
+  "outcome": "Sustained eGFR decline of 30% or more within 3 years: the first eGFR after the current result at or below 70% of the previous 2-year mean, confirmed by a later eGFR at or below that level at least 90 days afterwards, with no intervening eGFR above it.",
+  "provenance": {
+    "internal_model_identifier": "SPARK-8",
+    "source_parameter_file": "04_SPARK8_PARAMETERS.json",
+    "source_parameter_file_sha256": "c7b5340f8a58febf270b62a9fb0ca417334416c75013ed4635a09cb63e8b764c",
+    "production_pipeline_file": "SPARK8_pipeline.joblib",
+    "production_pipeline_sha256": "5338013f82eb15168cc43e6076dc02a0f8dd28bd77951df6e92ea1e66cd0d2d1",
+    "fitted_at_Australia_Melbourne": "2026-10-24T10:48:30+11:00",
+    "model_family": "L2-penalised (ridge) logistic regression, scikit-learn LogisticRegression(penalty=\"l2\", solver=\"lbfgs\", max_iter=5000, class_weight=None); intercept not penalised",
+    "statement": "Numbers copied programmatically at full precision from the frozen parameter file. No refitting, recalibration or imputation."
   },
-  "intercept": -4.6657803487719836,
-  "feature_order": [
-    "age_at_index",
-    "index_egfr",
-    "baseline_egfr_mean_preindex_2y",
-    "n_egfr_preindex_2y",
-    "egfr_relative_change_mean_to_index_2y",
-    "egfr_slope_2y",
-    "gender_at_index_M",
-    "gender_at_index_U",
-    "acei_arb_1y",
-    "diuretic_1y",
-    "polypharmacy_5plus_1y"
-  ],
-  "coefficients": {
-    "age_at_index": 0.02720993503223123,
-    "index_egfr": -0.4664573449260834,
-    "baseline_egfr_mean_preindex_2y": -0.0532227791165306,
-    "n_egfr_preindex_2y": 0.02910917270672745,
-    "egfr_relative_change_mean_to_index_2y": -0.48465829073222877,
-    "egfr_slope_2y": 0.012626286581128148,
-    "gender_at_index_M": 0.15071379396639561,
-    "gender_at_index_U": 0.013714675772904236,
-    "acei_arb_1y": 0.3700993643475363,
-    "diuretic_1y": 0.5707616035218716,
-    "polypharmacy_5plus_1y": 0.29728863331980226
-  },
-  "numeric_predictors": {
-    "age_at_index": {
-      "imputation_median": 71.0,
+  "intercept": -4.666627494879799,
+  "numeric_predictors": [
+    {
+      "name": "age_at_index",
+      "description": "Age in whole years at the date of the current eGFR",
       "scaling_mean": 70.42355514276298,
-      "scaling_sd": 11.173276728898978
+      "scaling_sd": 11.173276728898978,
+      "coefficient": 0.03050925874107072
     },
-    "index_egfr": {
-      "imputation_median": 73.0,
+    {
+      "name": "index_egfr",
+      "description": "Current eGFR (mL/min/1.73 m2)",
       "scaling_mean": 70.13158372531983,
-      "scaling_sd": 16.509578729932457
+      "scaling_sd": 16.509578729932457,
+      "coefficient": -0.4645659493395384
     },
-    "baseline_egfr_mean_preindex_2y": {
-      "imputation_median": 73.66666666666667,
+    {
+      "name": "baseline_egfr_mean_preindex_2y",
+      "description": "Mean of the daily eGFR values used from the 730 days before the current eGFR (mL/min/1.73 m2)",
       "scaling_mean": 70.95285574357351,
-      "scaling_sd": 15.395813834642231
+      "scaling_sd": 15.395813834642231,
+      "coefficient": -0.059149092585048316
     },
-    "n_egfr_preindex_2y": {
-      "imputation_median": 2.0,
-      "scaling_mean": 3.0244779339065824,
-      "scaling_sd": 2.070361047875982
-    },
-    "egfr_relative_change_mean_to_index_2y": {
-      "imputation_median": 0.0,
+    {
+      "name": "egfr_relative_change_mean_to_index_2y",
+      "description": "(current eGFR - previous 2-year mean) / previous 2-year mean, as a proportion",
       "scaling_mean": -0.009454488965708111,
-      "scaling_sd": 0.11718263019813469
-    },
-    "egfr_slope_2y": {
-      "imputation_median": -3.79964452013351e-14,
-      "scaling_mean": 1.0305129714853318,
-      "scaling_sd": 77.61385213884473
-    }
-  },
-  "categorical_predictors": {
-    "gender_at_index": {
-      "reference_category": "F",
-      "development_categories": [
-        "F",
-        "M",
-        "U"
-      ],
-      "missing_or_blank_fill_value_in_package_scorer": "Unknown",
-      "encoding_rules": {
-        "gender_at_index_M": {
-          "category": "M",
-          "value": "1 if gender_at_index == 'M', else 0"
-        },
-        "gender_at_index_U": {
-          "category": "U",
-          "value": "1 if gender_at_index == 'U', else 0"
-        }
-      },
-      "calculator_note": "Use explicit source value 'U' for unknown/unspecified sex. A blank missing value is filled as 'Unknown' by the package scorer and is not identical to 'U'."
-    }
-  },
-  "binary_predictors": {
-    "acei_arb_1y": {
-      "coding": "0/1 integer; 1 indicates exposure/presence",
-      "missing_handling": "missing_to_0",
-      "scaling": "none",
-      "definition": "Any ACE inhibitor or angiotensin receptor blocker exposure in the prior 365 days; ATC C09A, C09B, C09C, or C09D.",
-      "atc_prefixes": [
-        "C09A",
-        "C09B",
-        "C09C",
-        "C09D"
-      ]
-    },
-    "diuretic_1y": {
-      "coding": "0/1 integer; 1 indicates exposure/presence",
-      "missing_handling": "missing_to_0",
-      "scaling": "none",
-      "definition": "Any diuretic exposure in the prior 365 days; ATC C03.",
-      "atc_prefixes": [
-        "C03"
-      ]
-    },
-    "polypharmacy_5plus_1y": {
-      "coding": "0/1 integer; 1 indicates exposure/presence",
-      "missing_handling": "missing_to_0",
-      "scaling": "none",
-      "definition": "Five or more unique ATC components recorded in the prior 365 days.",
-      "atc_prefixes": []
-    }
-  },
-  "risk_bands": [
-    {
-      "label": "<2.5%",
-      "lower_bound_inclusive": 0.0,
-      "upper_bound_exclusive": 0.025
-    },
-    {
-      "label": "2.5% to <5%",
-      "lower_bound_inclusive": 0.025,
-      "upper_bound_exclusive": 0.05
-    },
-    {
-      "label": "5% to <7.5%",
-      "lower_bound_inclusive": 0.05,
-      "upper_bound_exclusive": 0.075
-    },
-    {
-      "label": "7.5% to <10%",
-      "lower_bound_inclusive": 0.075,
-      "upper_bound_exclusive": 0.1
-    },
-    {
-      "label": ">=10%",
-      "lower_bound_inclusive": 0.1,
-      "upper_bound_exclusive": null
+      "scaling_sd": 0.11718263019813469,
+      "coefficient": -0.4872141017913403
     }
   ],
-  "monitoring_thresholds": [
-    0.025,
-    0.05,
-    0.075,
-    0.1,
-    0.15
+  "sex": {
+    "categories": [
+      "F",
+      "M",
+      "U"
+    ],
+    "reference": "F",
+    "coefficients": {
+      "M": 0.15093750691361546,
+      "U": 0.012810253692463797
+    },
+    "unknown_rule": "Unknown or unrecorded sex is scored as U (frozen external implementation rule)."
+  },
+  "binary_predictors": [
+    {
+      "name": "acei_arb_1y",
+      "description": "ACE inhibitor or ARB use in the 365 days before the current eGFR (1 = yes, 0 = no)",
+      "coefficient": 0.3689272170581352
+    },
+    {
+      "name": "diuretic_1y",
+      "description": "Diuretic use in the 365 days before the current eGFR (1 = yes, 0 = no)",
+      "coefficient": 0.5731381164127833
+    },
+    {
+      "name": "polypharmacy_5plus_1y",
+      "description": "5 or more different medicines in the 365 days before the current eGFR (1 = yes, 0 = no)",
+      "coefficient": 0.29878330408420106
+    }
   ],
-  "monitoring_priority_threshold_5_percent": 0.05,
-  "s22_publication_exactness": {
-    "complete_in_parameter_scope": true,
-    "exact_enough_by_itself": false,
-    "reason": "S.22 rounds the intercept, coefficients, scaling parameters, and some imputation values; egfr_slope_2y imputation is shown as approx 0."
+  "linear_predictor": "intercept + sum(coefficient * (value - scaling_mean) / scaling_sd) over the 4 numeric predictors + sex coefficient (0 for F) + sum(coefficient * flag) over the 3 binary predictors",
+  "probability": "1 / (1 + exp(-linear_predictor))",
+  "scaling_note": "StandardScaler: scaling_sd is the POPULATION standard deviation (ddof=0) of the development values after median imputation",
+  "threshold": {
+    "value": 0.05,
+    "rule": "higher priority for kidney reassessment when the unrounded probability is >= 0.05 (the study rule p >= t)"
   },
-  "locked_model_verification": {
-    "corresponds_to_locked_primary_model": true,
-    "n_validation": 14812,
-    "events_validation": 375,
-    "auroc": 0.7577090346563229,
-    "brier": 0.023605147968543003,
-    "mean_predicted_risk": 0.025898925382261958,
-    "threshold_5_flagged_n": 1770,
-    "threshold_5_captured_events": 164,
-    "threshold_5_ppv": 0.09265536723163842,
-    "top_decile_flagged_n": 1482,
-    "top_decile_captured_events": 146,
-    "max_abs_prediction_difference_vs_locked": 4.787836793695988e-16,
-    "mean_abs_prediction_difference_vs_locked": 3.8450900292216845e-17,
-    "n_prediction_differences_gt_1e_minus_8": 0
+  "egfr_history": {
+    "lookback_days": 730,
+    "window": "dates d with current date - 730 days <= d < current date",
+    "same_day_results": "averaged into one daily value before the range rule is applied",
+    "valid_range_inclusive": [
+      30.0,
+      120.0
+    ],
+    "minimum_days": 2,
+    "previous_mean": "arithmetic mean of the daily values used",
+    "relative_change": "(current eGFR - previous mean) / previous mean",
+    "source": "development code: cleaning script same-day aggregation; FINAL_03 get_valid_preindex_lookback and summarize_lookback (reproduced exactly for all 33,377 development and 14,812 temporal-validation patients)"
   },
-  "intended_use_statement": "Research-use reconstruction of the locked Primary model predicted risk from already derived predictor values. Not a deployment-ready clinical decision system."
+  "eligibility": {
+    "age_years_inclusive": [
+      18,
+      100
+    ],
+    "current_egfr_inclusive": [
+      30.0,
+      120.0
+    ],
+    "plausible_egfr_result": {
+      "greater_than": 0.0,
+      "at_most": 200.0
+    }
+  },
+  "medication_definitions_frozen": {
+    "window": "[index_date - 365 days, index_date): days_before_index 1..365; index day excluded",
+    "source": "GP DuckDB clinical.medication_atc_component; executed 01b cleaning (upper-case, strip, remove non-alphanumerics); de-duplicated on (patient, index date, medication date, code); no record -> 0",
+    "acei_arb_1y": "any cleaned code starting C09A, C09B, C09C or C09D",
+    "diuretic_1y": "any cleaned code starting C03 (component-code rule; single-coded ACEi/ARB+diuretic combinations not counted - see medication sensitivities)",
+    "polypharmacy_5plus_1y": ">=5 distinct cleaned code strings (the non-ATC placeholder UNKNOWN counts as one code - see medication sensitivities)"
+  },
+  "verification_cases": [
+    {
+      "case": "V1_female_typical",
+      "age_at_index": 70.0,
+      "index_egfr": 65.0,
+      "baseline_egfr_mean_preindex_2y": 70.0,
+      "egfr_relative_change_mean_to_index_2y": -0.07142857142857142,
+      "gender_at_index": "F",
+      "acei_arb_1y": 1,
+      "diuretic_1y": 0,
+      "polypharmacy_5plus_1y": 1,
+      "expected_linear_predictor": -3.594342508765474,
+      "expected_probability": 0.026743856673006428
+    },
+    {
+      "case": "V2_male_all_medications",
+      "age_at_index": 80.0,
+      "index_egfr": 45.0,
+      "baseline_egfr_mean_preindex_2y": 55.0,
+      "egfr_relative_change_mean_to_index_2y": -0.18181818181818182,
+      "gender_at_index": "M",
+      "acei_arb_1y": 1,
+      "diuretic_1y": 1,
+      "polypharmacy_5plus_1y": 1,
+      "expected_linear_predictor": -1.763578839204507,
+      "expected_probability": 0.14634268182570107
+    },
+    {
+      "case": "V3_unknown_sex_no_medications",
+      "age_at_index": 60.0,
+      "index_egfr": 95.0,
+      "baseline_egfr_mean_preindex_2y": 92.0,
+      "egfr_relative_change_mean_to_index_2y": 0.03260869565217391,
+      "gender_at_index": "U",
+      "acei_arb_1y": 0,
+      "diuretic_1y": 0,
+      "polypharmacy_5plus_1y": 0,
+      "expected_linear_predictor": -5.637804500581198,
+      "expected_probability": 0.003548043856607104
+    },
+    {
+      "case": "V4_missing_numeric_median_imputed",
+      "age_at_index": 75.0,
+      "index_egfr": 50.0,
+      "baseline_egfr_mean_preindex_2y": null,
+      "egfr_relative_change_mean_to_index_2y": null,
+      "gender_at_index": "F",
+      "acei_arb_1y": 0,
+      "diuretic_1y": 1,
+      "polypharmacy_5plus_1y": 1,
+      "expected_linear_predictor": -3.265459065066342,
+      "expected_probability": 0.036775343523301564
+    },
+    {
+      "case": "V5_male_low_egfr",
+      "age_at_index": 90.0,
+      "index_egfr": 31.0,
+      "baseline_egfr_mean_preindex_2y": 60.0,
+      "egfr_relative_change_mean_to_index_2y": -0.48333333333333334,
+      "gender_at_index": "M",
+      "acei_arb_1y": 1,
+      "diuretic_1y": 1,
+      "polypharmacy_5plus_1y": 1,
+      "expected_linear_predictor": -0.10791475091926916,
+      "expected_probability": 0.47304746371815376
+    },
+    {
+      "case": "V6_aspree_like_two_visits",
+      "age_at_index": 77.5,
+      "index_egfr": 72.0,
+      "baseline_egfr_mean_preindex_2y": 74.5,
+      "egfr_relative_change_mean_to_index_2y": -0.03355704697986577,
+      "gender_at_index": "F",
+      "acei_arb_1y": 0,
+      "diuretic_1y": 0,
+      "polypharmacy_5plus_1y": 1,
+      "expected_linear_predictor": -4.314513006995079,
+      "expected_probability": 0.013196581800853808
+    },
+    {
+      "case": "T1_ordinary_female",
+      "age_at_index": 72.0,
+      "index_egfr": 68.0,
+      "baseline_egfr_mean_preindex_2y": 70.0,
+      "egfr_relative_change_mean_to_index_2y": -0.02857142857142857,
+      "gender_at_index": "F",
+      "acei_arb_1y": 0,
+      "diuretic_1y": 0,
+      "polypharmacy_5plus_1y": 0,
+      "expected_linear_predictor": -4.519198009120497,
+      "expected_probability": 0.010780279173106325
+    },
+    {
+      "case": "T2_ordinary_male",
+      "age_at_index": 72.0,
+      "index_egfr": 68.0,
+      "baseline_egfr_mean_preindex_2y": 70.0,
+      "egfr_relative_change_mean_to_index_2y": -0.02857142857142857,
+      "gender_at_index": "M",
+      "acei_arb_1y": 0,
+      "diuretic_1y": 0,
+      "polypharmacy_5plus_1y": 0,
+      "expected_linear_predictor": -4.368260502206881,
+      "expected_probability": 0.012514664841548647
+    },
+    {
+      "case": "T3_unknown_sex_U",
+      "age_at_index": 72.0,
+      "index_egfr": 68.0,
+      "baseline_egfr_mean_preindex_2y": 70.0,
+      "egfr_relative_change_mean_to_index_2y": -0.02857142857142857,
+      "gender_at_index": "U",
+      "acei_arb_1y": 0,
+      "diuretic_1y": 0,
+      "polypharmacy_5plus_1y": 0,
+      "expected_linear_predictor": -4.506387755428033,
+      "expected_probability": 0.010917748190366556
+    },
+    {
+      "case": "T4_medication_exposed_all_three",
+      "age_at_index": 72.0,
+      "index_egfr": 68.0,
+      "baseline_egfr_mean_preindex_2y": 70.0,
+      "egfr_relative_change_mean_to_index_2y": -0.02857142857142857,
+      "gender_at_index": "F",
+      "acei_arb_1y": 1,
+      "diuretic_1y": 1,
+      "polypharmacy_5plus_1y": 1,
+      "expected_linear_predictor": -3.2783493715653766,
+      "expected_probability": 0.03632144780313488
+    },
+    {
+      "case": "T5_values_at_development_medians",
+      "age_at_index": 71.0,
+      "index_egfr": 73.0,
+      "baseline_egfr_mean_preindex_2y": 73.66666666666667,
+      "egfr_relative_change_mean_to_index_2y": 0.0,
+      "gender_at_index": "F",
+      "acei_arb_1y": 0,
+      "diuretic_1y": 0,
+      "polypharmacy_5plus_1y": 0,
+      "expected_linear_predictor": -4.795503768723588,
+      "expected_probability": 0.008199053002964002
+    },
+    {
+      "case": "T6_extreme_valid_low_egfr_old",
+      "age_at_index": 100.0,
+      "index_egfr": 30.0,
+      "baseline_egfr_mean_preindex_2y": 120.0,
+      "egfr_relative_change_mean_to_index_2y": -0.75,
+      "gender_at_index": "M",
+      "acei_arb_1y": 1,
+      "diuretic_1y": 1,
+      "polypharmacy_5plus_1y": 1,
+      "expected_linear_predictor": 0.8257451460449802,
+      "expected_probability": 0.6954545124233469
+    },
+    {
+      "case": "T7_extreme_valid_high_egfr_young",
+      "age_at_index": 18.0,
+      "index_egfr": 120.0,
+      "baseline_egfr_mean_preindex_2y": 30.0,
+      "egfr_relative_change_mean_to_index_2y": 3.0,
+      "gender_at_index": "F",
+      "acei_arb_1y": 0,
+      "diuretic_1y": 0,
+      "polypharmacy_5plus_1y": 0,
+      "expected_linear_predictor": -18.56820114617224,
+      "expected_probability": 8.628448267467586e-09
+    }
+  ],
+  "verification_note": "Frozen production-pipeline values. V4 has missing values and needs median imputation, which the calculator does not perform; it is listed for completeness only."
 }
