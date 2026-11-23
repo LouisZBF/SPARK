@@ -1,6 +1,6 @@
-"""PRIORE scoring engine.
+"""RIDE (Risk Index for Decline in eGFR) scoring engine.
 
-Reproduces the locked final PRIORE model exactly from the frozen parameters in
+Reproduces the locked final RIDE model exactly from the frozen parameters in
 model_parameters.json. Nothing is fitted, recalibrated or imputed here.
 
 The eGFR-history inputs are derived with the rules of the development code:
@@ -51,7 +51,7 @@ class InputError(ValueError):
 
 
 class OutsideIntendedUse(ValueError):
-    """The inputs are valid but outside the population PRIORE was developed for."""
+    """The inputs are valid but outside the population RIDE was developed for."""
 
     def __init__(self, messages: Sequence[str], history: Optional["EgfrHistory"] = None):
         self.messages = list(messages)
@@ -102,7 +102,7 @@ def load_parameters(path: Path = PARAMETER_PATH) -> dict:
     numeric = [p["name"] for p in params["numeric_predictors"]]
     binary = [p["name"] for p in params["binary_predictors"]]
     if tuple(numeric) != NUMERIC_PREDICTORS or tuple(binary) != BINARY_PREDICTORS:
-        raise RuntimeError("model_parameters.json does not list the PRIORE predictors in the expected order")
+        raise RuntimeError("model_parameters.json does not list the RIDE predictors in the expected order")
     if tuple(params["sex"]["categories"]) != SEX_CODES or params["sex"]["reference"] != "F":
         raise RuntimeError("model_parameters.json has an unexpected sex coding")
     for p in params["numeric_predictors"]:
@@ -253,7 +253,7 @@ def estimate_risk(
     """Validate the entered values, derive the eGFR-history inputs and return the estimate.
 
     Raises InputError for missing or implausible entries and OutsideIntendedUse
-    when the person is outside the population PRIORE was developed for.
+    when the person is outside the population RIDE was developed for.
     """
     errors: List[str] = []
 
@@ -282,7 +282,7 @@ def estimate_risk(
     answers = {
         "ACE inhibitor or ARB use": acei_arb,
         "diuretic use": diuretic,
-        "5 or more regular medicines": polypharmacy,
+        "5 or more different medicines": polypharmacy,
     }
     for question, answer in answers.items():
         if answer is None:
@@ -299,15 +299,15 @@ def estimate_risk(
 
     outside: List[str] = []
     if not (age_low <= age_value <= age_high):
-        outside.append(f"PRIORE was developed for adults aged {age_low} to {age_high} years.")
+        outside.append(f"RIDE was developed for adults aged {age_low} to {age_high} years.")
     if not (egfr_low <= egfr_value <= egfr_high):
         outside.append(
-            f"PRIORE was developed for people with a current eGFR of {egfr_low:g} to {egfr_high:g} {EGFR_UNIT}."
+            f"RIDE was developed for people with a current eGFR of {egfr_low:g} to {egfr_high:g} {EGFR_UNIT}."
         )
     if len(history.days_used) < rules["minimum_days"]:
         low, high = rules["valid_range_inclusive"]
         outside.append(
-            f"PRIORE needs eGFR results from at least {rules['minimum_days']} different days in the "
+            f"RIDE needs eGFR results from at least {rules['minimum_days']} different days in the "
             f"{rules['lookback_days']} days before the current eGFR, each between {low:g} and {high:g} "
             f"{EGFR_UNIT}. Results usable here: {len(history.days_used)} day(s)."
         )

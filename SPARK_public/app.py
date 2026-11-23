@@ -1,4 +1,4 @@
-"""PRIORE web calculator (Streamlit).
+"""RIDE (Risk Index for Decline in eGFR) web calculator (Streamlit).
 
 All calculation is done by score_model.py; this file only collects the entered
 values and shows the result.
@@ -15,21 +15,18 @@ import score_model as engine
 
 SOURCE_CODE_URL = "https://github.com/LouisZBF/SPARK"
 
-TITLE = "PRIORE"
-SUBTITLE = "Kidney reassessment prioritisation"
+TITLE = "RIDE"
+SUBTITLE = "Risk Index for Decline in eGFR"
 INTRO = (
-    "Estimates the likelihood of sustained kidney function decline over the next 3 years "
-    "using information already available in the primary care record."
+    "Estimates the 3-year risk of sustained eGFR decline of 30% or greater from routinely available "
+    "primary care data, without albuminuria measurements, to help prioritise repeat eGFR and urine ACR testing."
 )
 RESULT_HEADING = "Estimated 3-year risk"
 HIGHER_PRIORITY = "Higher priority for kidney reassessment"
 ROUTINE_PRIORITY = "Routine priority for kidney reassessment"
-INTERPRETATION = (
-    "A 5% risk threshold was used in the study to prioritise repeat eGFR and urine ACR assessment. "
-    "This threshold is intended to guide reassessment priority, not diagnose CKD."
-)
+INTERPRETATION = "A 5% risk threshold was used in the study to prioritise repeat eGFR and urine ACR assessment."
 STATEMENT = (
-    "PRIORE is intended to support prioritisation of kidney assessment in primary care. "
+    "RIDE is intended to support prioritisation of kidney assessment in primary care. "
     "It does not diagnose CKD and does not replace urine ACR testing or KFRE when these are indicated."
 )
 
@@ -52,10 +49,28 @@ MEDICINE_QUESTIONS = (
     ),
     (
         "polypharmacy",
-        "5 or more regular medicines in the previous year",
-        "In the study: prescriptions for 5 or more different medicines in the year before the current eGFR.",
+        "5 or more different medicines in the previous year",
+        "Prescriptions for 5 or more different medicines in the year before the current eGFR.",
     ),
 )
+INPUT_REQUIREMENTS = f"""
+All inputs are required.
+
+- **Age:** whole years. RIDE was developed for ages 18 to 100.
+- **Sex:** female, male or unknown. Choose Unknown if sex is not recorded.
+- **Current eGFR and its date:** RIDE was developed for a current eGFR of 30 to 120 {engine.EGFR_UNIT}. Enter results
+  reported as >90 as 90. If more than one eGFR was recorded that day, enter their average.
+- **Previous eGFR results:** every result from the 2 years (730 days) before the current eGFR, each with its date.
+  Results from the same day are averaged. Results outside this window, and daily values below 30 or above 120, are
+  not used. At least 2 days with usable results are needed.
+- **Medicines in the previous year:** yes or no for ACE inhibitor or ARB, diuretic, and 5 or more different medicines.
+
+If an input is missing, a previous result lacks its date or value, or an eGFR is 0 or less or above 200, no estimate
+is given and the calculator lists what to check. If the inputs are outside the ranges above, or fewer than 2 days of
+previous results can be used, no estimate is given and the reason is shown. Missing values are not imputed and
+out-of-range values are not adjusted.
+"""
+
 MIN_ROWS = 2
 MAX_ROWS = 100
 DATE_FORMAT = "DD/MM/YYYY"
@@ -66,20 +81,20 @@ STYLE = """
 <style>
 .block-container {max-width: 46rem; padding-top: 4.75rem; padding-bottom: 3rem;}
 h1 {font-size: 2.3rem !important; margin-bottom: 0 !important; padding-bottom: 0 !important; letter-spacing: 0.03em;}
-div[data-testid="stMarkdownContainer"] p.priore-subtitle {font-size: 1.15rem; font-weight: 600; color: #3d4a57;
+div[data-testid="stMarkdownContainer"] p.ride-subtitle {font-size: 1.15rem; font-weight: 600; color: #3d4a57;
   margin: 0.1rem 0 0.5rem 0;}
-div.priore-result {border: 1px solid #d5dbe1; border-left-width: 6px; border-radius: 6px;
+div.ride-result {border: 1px solid #d5dbe1; border-left-width: 6px; border-radius: 6px;
   padding: 1rem 1.25rem; margin: 0.75rem 0 0.75rem 0; background: #ffffff;}
-div.priore-result p {margin: 0;}
-div.priore-result p.priore-result-label {font-size: 0.95rem; color: #3d4a57;}
-div.priore-result p.priore-result-value {font-size: 2.8rem; font-weight: 700; line-height: 1.2; color: #1a1a1a;
+div.ride-result p {margin: 0;}
+div.ride-result p.ride-result-label {font-size: 0.95rem; color: #3d4a57;}
+div.ride-result p.ride-result-value {font-size: 2.8rem; font-weight: 700; line-height: 1.2; color: #1a1a1a;
   margin: 0.1rem 0;}
-div.priore-result p.priore-result-priority {font-size: 1.15rem; font-weight: 600;}
-div.priore-result p.priore-result-note {font-size: 0.95rem; color: #3d4a57; margin-top: 0.6rem;}
-div.priore-higher {border-left-color: #b45309;}
-div.priore-higher p.priore-result-priority {color: #92400e;}
-div.priore-routine {border-left-color: #3f6f5a;}
-div.priore-routine p.priore-result-priority {color: #2f5446;}
+div.ride-result p.ride-result-priority {font-size: 1.15rem; font-weight: 600;}
+div.ride-result p.ride-result-note {font-size: 0.95rem; color: #3d4a57; margin-top: 0.6rem;}
+div.ride-higher {border-left-color: #b45309;}
+div.ride-higher p.ride-result-priority {color: #92400e;}
+div.ride-routine {border-left-color: #3f6f5a;}
+div.ride-routine p.ride-result-priority {color: #2f5446;}
 </style>
 """
 
@@ -200,15 +215,15 @@ def show_history(history, estimate) -> None:
 
 def show_result(estimate, params: dict) -> None:
     higher = estimate.higher_priority
-    css = "priore-higher" if higher else "priore-routine"
+    css = "ride-higher" if higher else "ride-routine"
     priority = HIGHER_PRIORITY if higher else ROUTINE_PRIORITY
     risk = html.escape(engine.format_risk(estimate.probability, params))
     st.markdown(
-        f'<div class="priore-result {css}" role="status">'
-        f'<p class="priore-result-label">{RESULT_HEADING}</p>'
-        f'<p class="priore-result-value">{risk}</p>'
-        f'<p class="priore-result-priority">{priority}</p>'
-        f'<p class="priore-result-note">{INTERPRETATION}</p>'
+        f'<div class="ride-result {css}" role="status">'
+        f'<p class="ride-result-label">{RESULT_HEADING}</p>'
+        f'<p class="ride-result-value">{risk}</p>'
+        f'<p class="ride-result-priority">{priority}</p>'
+        f'<p class="ride-result-note">{INTERPRETATION}</p>'
         f"</div>",
         unsafe_allow_html=True,
     )
@@ -233,7 +248,7 @@ def navigation(back_link: bool) -> None:
     with st.container(horizontal=True, horizontal_alignment="right", gap="small"):
         if back_link:
             st.page_link(CALCULATOR, label="Calculator")
-        st.page_link(ABOUT, label="About PRIORE")
+        st.page_link(ABOUT, label="About RIDE")
         st.page_link(STUDY, label="Study")
         st.page_link(SOURCE_CODE_URL, label="Source code")
 
@@ -241,7 +256,7 @@ def navigation(back_link: bool) -> None:
 def header(back_link: bool = False) -> None:
     navigation(back_link)
     st.title(TITLE, anchor=False)
-    st.markdown(f'<p class="priore-subtitle">{SUBTITLE}</p>', unsafe_allow_html=True)
+    st.markdown(f'<p class="ride-subtitle">{SUBTITLE}</p>', unsafe_allow_html=True)
 
 
 def footer() -> None:
@@ -255,6 +270,8 @@ def calculator_page() -> None:
     start_blank()
     header()
     st.markdown(INTRO)
+    with st.expander("Input requirements"):
+        st.markdown(INPUT_REQUIREMENTS)
 
     st.subheader("Patient", anchor=False)
     left, right = st.columns(2)
@@ -309,49 +326,30 @@ def calculator_page() -> None:
 
 def about_page() -> None:
     header(back_link=True)
-    st.subheader("About PRIORE", anchor=False)
+    st.subheader("About RIDE", anchor=False)
     st.markdown(
-        f"""
-PRIORE estimates the risk of sustained kidney function decline over the next 3 years. It uses information
-that is usually already in the primary care record: age, sex, the current eGFR, eGFR results from the previous
-2 years, and recorded use of ACE inhibitors or ARBs, diuretics and 5 or more regular medicines in the
-previous year.
-
-The estimate is intended to help primary care teams decide whose kidney function to reassess first, with repeat
-eGFR and urine albumin-to-creatinine ratio (ACR) testing.
+        """
+RIDE (Risk Index for Decline in eGFR) estimates the 3-year risk of sustained eGFR decline of 30% or greater. It uses
+age, sex, the current eGFR, eGFR results from the previous 2 years and medication records from the previous year.
+It does not require albuminuria measurements.
 
 **Reading the result**
 
-The result is the estimated chance of a sustained eGFR decline of 30% or more within 3 years: two eGFR results
-at or below 70% of the average of the previous 2 years, at least 90 days apart, without recovery in between.
-In the study, an estimated risk of 5% or more was used to identify people for higher-priority reassessment.
-A routine-priority result does not rule out kidney function decline.
+The result is the estimated chance of a sustained eGFR decline of 30% or greater within 3 years: an eGFR at or below
+70% of the average of the previous 2 years, confirmed by a second result at or below that level at least 90 days
+later, with no result above that level in between. In the study, an estimated risk of 5% or greater identified
+patients for higher-priority reassessment. A routine-priority result does not rule out kidney function decline.
 
-**What PRIORE does not do**
+**Intended use**
 
-- It does not diagnose chronic kidney disease (CKD).
-- It does not estimate the risk of kidney failure. In people with CKD, the Kidney Failure Risk Equation (KFRE),
-  which requires a urine ACR result, can be used when indicated.
-- It does not replace urine ACR testing, clinical judgement or local guidelines.
+RIDE is intended to help prioritise repeat eGFR and urine albumin-to-creatinine ratio (ACR) testing in primary care.
+It does not estimate the risk of kidney failure. In people with chronic kidney disease, the Kidney Failure Risk
+Equation (KFRE), which requires a urine ACR result, can be used when indicated.
 
-**Who it can be used for**
+**Development**
 
-Adults aged 18 to 100 years with a current eGFR of 30 to 120 {UNIT} and eGFR results from at least 2
-different days in the previous 2 years.
-
-**Entering results**
-
-- Enter every eGFR result from the 2 years (730 days) before the current eGFR.
-- Results from the same day are averaged. As in the study, results below 30 or above 120 {UNIT} are not
-  used for the average of the previous 2 years.
-- Enter results reported as >90 as 90.
-- The medicine questions refer to the year before the current eGFR.
-
-**Limitations**
-
-PRIORE was developed and tested using past records. It has not been evaluated in a prospective study, and
-whether using it improves care or outcomes is not known. Estimates may be less accurate in settings or
-populations that differ from those studied.
+RIDE was developed and validated using past records. It has not been evaluated prospectively, and estimates may be
+less accurate in populations that differ from those studied.
 
 **Privacy**
 
@@ -366,31 +364,30 @@ def study_page() -> None:
     st.subheader("Study", anchor=False)
     st.markdown(
         f"""
-PRIORE was developed and evaluated in a retrospective prognostic study.
+RIDE was developed and validated in a retrospective prognostic study.
 
-**Data.** De-identified electronic health records from Australian general practices, supplied to Monash
-University by IQVIA. External validation used the ASPirin in Reducing Events in the Elderly (ASPREE) trial of
-older adults in Australia and the United States.
+**Data.** De-identified electronic health records from Australian general practices, supplied to Monash University
+by IQVIA. External validation used the ASPirin in Reducing Events in the Elderly (ASPREE) trial of older adults in
+Australia and the United States.
 
-**Participants.** Adults aged 18 to 100 years with a current eGFR of 30 to 120 {UNIT} between
-1 January 2015 and 31 March 2020, at least 2 eGFR results in the previous 2 years and at least 2 eGFR results
-in the following 3 years. People with an earlier sustained eGFR decline were excluded.
+**Participants.** Adults aged 18 to 100 years with an eGFR of 30 to 120 {UNIT} between 1 January 2015 and
+31 March 2020, at least 2 eGFR results in the previous 2 years and at least 2 eGFR results in the following 3 years.
+People with an earlier sustained eGFR decline were excluded.
 
-- Development: 33,377 patients (index dates in 2015 and 2016)
-- Temporal validation: 14,812 patients (index dates from January 2017 to March 2020)
-- External validation: 12,595 ASPREE participants
+- Development: 33,377 patients, index dates in 2015 and 2016 (1,013 sustained declines)
+- Temporal validation: 14,812 patients, index dates from January 2017 to March 2020 (375 sustained declines)
+- External validation: 12,595 ASPREE participants (177 sustained declines)
 
-**Outcome.** Sustained eGFR decline of 30% or more within 3 years, compared with the average eGFR of the
-previous 2 years, requiring 2 reduced results at least 90 days apart without recovery in between.
+**Outcome.** Sustained eGFR decline of 30% or greater within 3 years.
 
-**Information used.** Age, sex, current eGFR, the average eGFR of the previous 2 years, the change from that
-average to the current eGFR, and recorded use of ACE inhibitors or ARBs, diuretics and 5 or more medicines in
-the previous year. A urine ACR result is not needed.
+**Predictors.** Age, sex, current eGFR, mean eGFR of the previous 2 years, relative change from that mean to the
+current eGFR, and recorded use of ACE inhibitors or ARBs, diuretics and 5 or more different medicines in the previous
+year. A urine ACR result is not needed.
 
-**The 5% threshold.** In temporal validation, 12.2% of patients had an estimated risk of 5% or more; this
-group included 44.0% of the patients who went on to have a sustained decline. In ASPREE, 8.6% of participants
-had an estimated risk of 5% or more, including 42.4% of those with a sustained decline. In ASPREE, estimated
-risks were on average higher than the risks observed.
+**The 5% threshold.** In temporal validation, 12.2% of patients had an estimated risk of 5% or greater; this group
+included 44.0% of the patients who had a sustained decline. In ASPREE, 8.6% of participants had an estimated risk of
+5% or greater, including 42.4% of those who had a sustained decline. In ASPREE, mean estimated risk was higher than
+the observed risk (2.12% vs 1.41%).
 
 Publication details will be added when available.
 """
@@ -399,10 +396,10 @@ Publication details will be added when available.
 
 
 st.set_page_config(page_icon=":material/clinical_notes:", layout="centered", initial_sidebar_state="collapsed")
-CALCULATOR = st.Page(calculator_page, title="PRIORE - Kidney reassessment prioritisation", url_path="calculator",
+CALCULATOR = st.Page(calculator_page, title="RIDE — Risk Index for Decline in eGFR", url_path="calculator",
                      default=True)
-ABOUT = st.Page(about_page, title="About PRIORE", url_path="about")
-STUDY = st.Page(study_page, title="Study - PRIORE", url_path="study")
+ABOUT = st.Page(about_page, title="About RIDE", url_path="about")
+STUDY = st.Page(study_page, title="Study — RIDE", url_path="study")
 current_page = st.navigation([CALCULATOR, ABOUT, STUDY], position="hidden")
 keep_inputs()
 st.html(STYLE)

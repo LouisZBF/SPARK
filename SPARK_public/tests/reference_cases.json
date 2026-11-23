@@ -1,5 +1,5 @@
 {
- "description": "PRIORE reference cases. Expected values from the frozen production pipeline (SPARK8_pipeline.joblib); derived values from the development code (FINAL_03 functions extracted verbatim; same-day aggregation from the cleaning script).",
+ "description": "RIDE reference cases. Expected values from the frozen production pipeline (SPARK8_pipeline.joblib); derived values from the development code (FINAL_03 functions extracted verbatim; same-day aggregation from the cleaning script).",
  "authoritative_parameters_sha256": "c7b5340f8a58febf270b62a9fb0ca417334416c75013ed4635a09cb63e8b764c",
  "production_pipeline_sha256": "5338013f82eb15168cc43e6076dc02a0f8dd28bd77951df6e92ea1e66cd0d2d1",
  "rules": {

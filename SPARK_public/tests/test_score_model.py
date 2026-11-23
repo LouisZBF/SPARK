@@ -1,4 +1,4 @@
-"""Tests for the PRIORE scoring engine.
+"""Tests for the RIDE (Risk Index for Decline in eGFR) scoring engine.
 
 Run from the repository root:  python -m unittest discover -s SPARK_public/tests -v
 
@@ -172,7 +172,7 @@ class Validation(unittest.TestCase):
         self.assert_input_error("Enter the current eGFR", current_egfr=None)
         self.assert_input_error("ACE inhibitor or ARB", acei_arb=None)
         self.assert_input_error("diuretic", diuretic=None)
-        self.assert_input_error("5 or more regular medicines", polypharmacy=None)
+        self.assert_input_error("5 or more different medicines", polypharmacy=None)
 
     def test_implausible_values(self):
         self.assert_input_error("whole years", age=70.5)

@@ -52,6 +52,7 @@ def page_text(at):
     parts += [s.value for s in at.subheader] + [e.value for e in at.error] + [w.value for w in at.warning]
     parts += [w.label for w in at.number_input] + [w.label for w in at.date_input] + [w.label for w in at.radio]
     parts += [b.label for b in at.button]
+    parts += [e.label for e in at.expander]
     return "\n".join(str(p) for p in parts)
 
 
@@ -82,16 +83,18 @@ class CalculatorPage(unittest.TestCase):
         at = new_app()
         self.assertFalse(at.exception)
         text = page_text(at)
-        for expected in ("PRIORE", "Kidney reassessment prioritisation",
-                         "Estimates the likelihood of sustained kidney function decline over the next 3 years "
-                         "using information already available in the primary care record.",
+        for expected in ("RIDE", "Risk Index for Decline in eGFR",
+                         "Estimates the 3-year risk of sustained eGFR decline of 30% or greater from routinely "
+                         "available primary care data, without albuminuria measurements, to help prioritise "
+                         "repeat eGFR and urine ACR testing.",
+                         "Input requirements", "All inputs are required.",
                          "Age (years)", "Sex", "Current eGFR", "eGFR results from the previous 2 years",
                          "ACE inhibitor or ARB use in the previous year", "Diuretic use in the previous year",
-                         "5 or more regular medicines in the previous year", "Calculate risk",
-                         "PRIORE is intended to support prioritisation of kidney assessment in primary care. It does "
+                         "5 or more different medicines in the previous year", "Calculate risk",
+                         "RIDE is intended to support prioritisation of kidney assessment in primary care. It does "
                          "not diagnose CKD and does not replace urine ACR testing or KFRE when these are indicated."):
             self.assertIn(expected, text)
-        for forbidden in ("SPARK", "coefficient", "logit", "z-score", "feature", "AUROC", "preprocess"):
+        for forbidden in ("SPARK", "PRIORE", "coefficient", "logit", "z-score", "feature", "AUROC", "preprocess"):
             self.assertNotIn(forbidden.lower(), text.lower())
 
     def test_inputs_start_empty(self):
@@ -107,7 +110,7 @@ class CalculatorPage(unittest.TestCase):
         at.button(key="calculate").click().run()
         self.assertEqual(len(at.error), 1)
         for text in ("Enter age", "Select sex", "date of the current eGFR", "Enter the current eGFR",
-                     "ACE inhibitor or ARB", "diuretic use", "5 or more regular medicines"):
+                     "ACE inhibitor or ARB", "diuretic use", "5 or more different medicines"):
             self.assertIn(text, at.error[0].value)
         self.assertEqual(self.recorder.estimates, [])
 
@@ -123,7 +126,7 @@ class CalculatorPage(unittest.TestCase):
                     self.assertEqual(len(self.recorder.estimates), 1)
                     estimate = self.recorder.estimates[0]
                     self.assertLessEqual(abs(estimate.probability - expected["probability"]), TOLERANCE)
-                    shown = "\n".join(m.value for m in at.markdown if "priore-result" in m.value)
+                    shown = "\n".join(m.value for m in at.markdown if "ride-result" in m.value)
                     self.assertIn(html.escape(engine.format_risk(expected["probability"], PARAMS)), shown)
                     label = "Higher priority" if expected["priority"] == "higher" else "Routine priority"
                     self.assertIn(f"{label} for kidney reassessment", shown)
@@ -137,9 +140,9 @@ class CalculatorPage(unittest.TestCase):
         case = next(c for c in REFERENCE["cases"] if c["id"] == "R12")
         at = new_app()
         fill(at, case)
-        self.assertTrue(any("priore-result" in m.value for m in at.markdown))
+        self.assertTrue(any("ride-result" in m.value for m in at.markdown))
         at.number_input(key="age").set_value(case["age"] + 1).run()
-        self.assertFalse(any("priore-result" in m.value for m in at.markdown))
+        self.assertFalse(any("ride-result" in m.value for m in at.markdown))
 
     def test_rows_can_be_added_and_removed(self):
         at = new_app()

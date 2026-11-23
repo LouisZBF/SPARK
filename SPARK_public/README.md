@@ -1,33 +1,34 @@
-# PRIORE
+# RIDE — Risk Index for Decline in eGFR
 
-**Kidney reassessment prioritisation**
+RIDE estimates the 3-year risk of sustained eGFR decline of 30% or greater from routinely available primary care
+data, without albuminuria measurements. It is intended to help prioritise repeat eGFR and urine ACR testing.
 
-PRIORE estimates the likelihood of sustained kidney function decline over the next 3 years using information
-already available in the primary care record.
-
-PRIORE is intended to support prioritisation of kidney assessment in primary care. It does not diagnose CKD and
-does not replace urine ACR testing or KFRE when these are indicated.
+RIDE does not diagnose CKD and does not replace urine ACR testing or the Kidney Failure Risk Equation (KFRE) when
+these are indicated.
 
 - Web calculator: <https://spark-kidney-decline.streamlit.app>
 - Project website: <https://louiszbf.github.io>
 
-## Inputs
+## Input requirements
 
-| Input | Notes |
+| Input | Requirement |
 | --- | --- |
-| Age | Whole years, 18 to 100 |
+| Age | Whole years; RIDE was developed for ages 18 to 100 |
 | Sex | Female, male or unknown (unknown or unrecorded sex is scored as unknown) |
-| Current eGFR and its date | mL/min/1.73 m², 30 to 120 |
-| eGFR results from the previous 2 years | Every result in the 730 days before the current eGFR, with dates; results from at least 2 different days are needed |
+| Current eGFR and its date | mL/min/1.73 m²; RIDE was developed for a current eGFR of 30 to 120 |
+| eGFR results from the previous 2 years | Every result in the 730 days before the current eGFR, with dates; results from at least 2 different days of 30 to 120 are needed |
 | ACE inhibitor or ARB use in the previous year | Yes / No |
 | Diuretic use in the previous year | Yes / No |
-| 5 or more regular medicines in the previous year | Yes / No |
+| 5 or more different medicines in the previous year | Yes / No |
 
-Every input is required. Missing values are never imputed, and values outside the limits above are never
-clamped: the calculator explains why no estimate can be given.
+All inputs are required. Enter results reported as ">90" as 90 (this is how such results were recorded in the
+study data). If more than one eGFR was recorded on the day of the current eGFR, enter their average.
 
-Enter results reported as ">90" as 90 (this is how such results were recorded in the study data). If more than
-one eGFR was recorded on the day of the current eGFR, enter their average.
+- **Missing or invalid input.** If an input is missing, a previous result lacks its date or value, or an eGFR is
+  0 or less or above 200 mL/min/1.73 m², no estimate is given and every problem is listed.
+- **Outside the intended population.** If age is outside 18 to 100, the current eGFR is outside 30 to 120, or
+  fewer than 2 days of previous results can be used, no estimate is given and the reason is shown.
+- Missing values are never imputed, and values outside the limits are never clamped.
 
 ## Output
 
@@ -42,7 +43,7 @@ one eGFR was recorded on the day of the current eGFR, enter their average.
 
 ## How the estimate is calculated
 
-The calculator reproduces the locked final model exactly. Nothing is refitted, recalibrated or imputed.
+The calculator reproduces the locked final RIDE model exactly. Nothing is refitted, recalibrated or imputed.
 
 1. **Previous eGFR results.** Results recorded on the same calendar day are averaged into one daily value. A daily
    value is used when its date is within the 730 days before the current eGFR (the current eGFR date itself is
@@ -52,7 +53,7 @@ The calculator reproduces the locked final model exactly. Nothing is refitted, r
    (current eGFR − previous mean) / previous mean, as a proportion.
 3. **Model.** L2-penalised (ridge) logistic regression with 8 predictors: age, sex (female reference; male;
    unknown), current eGFR, previous 2-year mean eGFR, relative change, ACE inhibitor or ARB use, diuretic use and
-   5 or more medicines.
+   5 or more different medicines.
 
    ```text
    lp = intercept
