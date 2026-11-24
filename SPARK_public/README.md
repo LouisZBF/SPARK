@@ -32,10 +32,10 @@ study data). If more than one eGFR was recorded on the day of the current eGFR, 
 
 ## Output
 
-- **Estimated 3-year risk** of sustained eGFR decline of 30% or more: a first eGFR at or below 70% of the
+- **Estimated 3-year risk** of sustained eGFR decline of 30% or greater: a first eGFR at or below 70% of the
   average of the previous 2 years, confirmed by a second result at least 90 days later, with no recovery in
   between.
-- **Higher priority for kidney reassessment** when the estimate is 5% or more; otherwise **Routine priority for
+- **Higher priority for kidney reassessment** when the estimate is 5% or greater; otherwise **Routine priority for
   kidney reassessment**. The 5% threshold was used in the study to prioritise repeat eGFR and urine ACR
   assessment. The classification uses the unrounded estimate.
 - The estimate is shown to one decimal place. A value just below 5% that would round up to 5.0% is shown as

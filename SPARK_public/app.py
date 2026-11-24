@@ -61,14 +61,14 @@ All inputs are required.
 - **Current eGFR and its date:** RIDE was developed for a current eGFR of 30 to 120 {engine.EGFR_UNIT}. Enter results
   reported as >90 as 90. If more than one eGFR was recorded that day, enter their average.
 - **Previous eGFR results:** every result from the 2 years (730 days) before the current eGFR, each with its date.
-  Results from the same day are averaged. Results outside this window, and daily values below 30 or above 120, are
-  not used. At least 2 days with usable results are needed.
+  Results from the same day are averaged. Results outside this window, and daily values below 30 or above 120
+  {engine.EGFR_UNIT}, are not used. At least 2 days with usable results are needed.
 - **Medicines in the previous year:** yes or no for ACE inhibitor or ARB, diuretic, and 5 or more different medicines.
 
-If an input is missing, a previous result lacks its date or value, or an eGFR is 0 or less or above 200, no estimate
-is given and the calculator lists what to check. If the inputs are outside the ranges above, or fewer than 2 days of
-previous results can be used, no estimate is given and the reason is shown. Missing values are not imputed and
-out-of-range values are not adjusted.
+If an input is missing, a previous result lacks its date or value, or an eGFR is 0 or less or above 200
+{engine.EGFR_UNIT}, no estimate is given and the calculator lists what to check. If age is outside 18 to 100 or the
+current eGFR is outside 30 to 120 {engine.EGFR_UNIT}, or fewer than 2 days of previous results can be used, no estimate
+is given and the reason is shown. Missing values are not imputed and out-of-range values are not adjusted.
 """
 
 MIN_ROWS = 2
@@ -294,8 +294,8 @@ def calculator_page() -> None:
 
     st.subheader("eGFR results from the previous 2 years", anchor=False)
     st.caption(
-        "Enter every eGFR result from the 2 years (730 days) before the current eGFR. At least 2 results "
-        "on different days are needed. Enter results reported as >90 as 90."
+        "Enter every eGFR result from the 2 years (730 days) before the current eGFR. At least 2 days with "
+        f"results of 30 to 120 {UNIT} are needed. Enter results reported as >90 as 90."
     )
     for i in range(1, row_count() + 1):
         left, right = st.columns(2)
@@ -370,13 +370,13 @@ RIDE was developed and validated in a retrospective prognostic study.
 by IQVIA. External validation used the ASPirin in Reducing Events in the Elderly (ASPREE) trial of older adults in
 Australia and the United States.
 
-**Participants.** Adults aged 18 to 100 years with an eGFR of 30 to 120 {UNIT} between 1 January 2015 and
+**Participants.** Primary care: adults aged 18 to 100 years with an eGFR of 30 to 120 {UNIT} between 1 January 2015 and
 31 March 2020, at least 2 eGFR results in the previous 2 years and at least 2 eGFR results in the following 3 years.
 People with an earlier sustained eGFR decline were excluded.
 
 - Development: 33,377 patients, index dates in 2015 and 2016 (1,013 sustained declines)
 - Temporal validation: 14,812 patients, index dates from January 2017 to March 2020 (375 sustained declines)
-- External validation: 12,595 ASPREE participants (177 sustained declines)
+- External validation: 12,595 ASPREE participants, index at the second annual visit (177 sustained declines)
 
 **Outcome.** Sustained eGFR decline of 30% or greater within 3 years.
 
